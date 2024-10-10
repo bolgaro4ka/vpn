@@ -5,10 +5,16 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import axios from 'axios'
+import { BASE_URL } from './config/main'
 
 const app = createApp(App)
 
 app.use(createPinia())
+
+app.config.globalProperties.axios = axios
+
+axios.defaults.baseURL = BASE_URL
 app.use(router)
 
 app.mount('#app')

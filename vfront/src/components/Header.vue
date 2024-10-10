@@ -20,8 +20,8 @@ const isSiderOpen = ref(true);
         
         <div class="header__links">
             <template v-if="!auth">
-                <RouterLink to="/auth/reg">Регистрация</RouterLink>
-                <RouterLink to="/auth/login">Вход</RouterLink>
+                <RouterLink to="/auth/reg/">Регистрация</RouterLink>
+                <RouterLink to="/auth/login/">Вход</RouterLink>
             </template>
             <template v-else>
                 <RouterLink to="/">Личный кабинет</RouterLink>

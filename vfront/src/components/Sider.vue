@@ -16,16 +16,16 @@ const props: any = defineProps({
         <div class="sider__menu">
             <div class="sider__top">
                 <div class="sider__item"><RouterLink to="/">Главная</RouterLink></div>
-                <div class="sider__item"><RouterLink to="/about">О нас</RouterLink></div>
-                <div class="sider__item"><RouterLink to="/contacts">Контакты</RouterLink></div>
+                <div class="sider__item"><RouterLink to="/about/">О нас</RouterLink></div>
+                <div class="sider__item"><RouterLink to="/contacts/">Контакты</RouterLink></div>
             </div>
             <div class="sider__bottom">
                 <template v-if="!auth">
-                    <div class="sider__item"><RouterLink to="/auth/reg">Регистрация</RouterLink></div>
-                    <div class="sider__item"><RouterLink to="/auth/login">Вход</RouterLink></div>
+                    <div class="sider__item"><RouterLink to="/auth/reg/">Регистрация</RouterLink></div>
+                    <div class="sider__item"><RouterLink to="/auth/login/">Вход</RouterLink></div>
                 </template>
                 <template v-else>
-                    <div class="sider__item"><RouterLink to="/auth/logout">Выйти</RouterLink></div>
+                    <div class="sider__item"><RouterLink to="/auth/logout/">Выйти</RouterLink></div>
                 </template>
             </div>
         </div>

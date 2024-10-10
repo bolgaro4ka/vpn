@@ -1,19 +1,33 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { onBeforeRouteUpdate, RouterLink, RouterView } from 'vue-router'
 import Header from './components/Header.vue'
 import Sider from './components/Sider.vue'
 
-import { ref } from 'vue';
+import {useRoute} from 'vue-router';
+import { ref, watch } from 'vue';
+
+const route = useRoute();
 
 const isSiderOpen = ref(true);
+
+
+const isAuthPage = ref(route.path == '/auth/login' || route.path == '/auth/reg')
+
+watch(route, (to, from) => {isAuthPage.value = route.path == '/auth/login/' || route.path == '/auth/reg/'; console.log('ch', route.path)})
 </script>
 
 <template>
 <div class="application">
-  <Header @toggleSider="() => {isSiderOpen = !isSiderOpen;}"/>
+  <Header @toggleSider="() => {isSiderOpen = !isSiderOpen;}" v-if="!isAuthPage"/>
   <div class="application__content">
-    <Sider :open="isSiderOpen"/>
-    <div class="view"><RouterView/></div>
+    <Sider :open="isSiderOpen" v-if="!isAuthPage"/>
+    <div class="view">
+      <router-view v-slot="{ Component }">
+        <transition name="page-opacity" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </div>
   </div>
 </div>
   
@@ -32,8 +46,20 @@ const isSiderOpen = ref(true);
   }
 }
 
+.page-opacity-enter-active,
+.page-opacity-leave-active {
+  transition: 600ms ease all;
+}
+
+.page-opacity-enter-from,
+.page-opacity-leave-to {
+  opacity: 0;
+}
+
+
+
 .view {
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
   height: 100%;
   width: 100%;
