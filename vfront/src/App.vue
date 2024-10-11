@@ -8,7 +8,7 @@ import { ref, watch } from 'vue';
 
 const route = useRoute();
 
-const isSiderOpen = ref(true);
+const isSiderOpen = ref(false);
 
 
 const isAuthPage = ref(route.path == '/auth/login' || route.path == '/auth/reg')

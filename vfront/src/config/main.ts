@@ -10,4 +10,4 @@ export const REG_URL = AUTH_URL+'reg/'
 
 export const TOKEN_URL = API_URL+'token/'
 
-export const USER_URL = API_URL+'getme/'
+export const USER_URL = AUTH_URL+'getme/'

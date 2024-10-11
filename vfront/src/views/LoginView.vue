@@ -3,18 +3,37 @@ import BackButton from '@/components/BackButton.vue';
 import axios from 'axios';
 import { LOGIN_URL } from '@/config/main';
 import { ref } from 'vue';
+import { auth } from '@/auth';
+import type { User } from '@/auth/interface';
+import { redirect } from '@/common';
+import { useRouter } from 'vue-router';
 
 const username = ref('');
-
 const password = ref('');
+
+const router = useRouter();
+
 async function login() {
   const req_raw = await axios.post(LOGIN_URL, {
     username: username.value,
     password: password.value
   }).then((res) => {
     console.log(res.data);
+    return res.data
+  }).catch((err) => {
+    console.log(err);
+    return
   })
+
+
+  auth(req_raw)
+  redirect(router, '/auth/login/');
+
+  return req_raw
+
 }
+
+
   
 
 

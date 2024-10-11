@@ -1,7 +1,62 @@
 <script lang="ts" setup>
 import BackButton from '@/components/BackButton.vue';
+import axios from 'axios';
+import { LOGIN_URL, REG_URL } from '@/config/main';
+import { ref } from 'vue';
+import { auth } from '@/auth';
+import type { User } from '@/auth/interface';
+import { redirect } from '@/common';
+import { useRouter } from 'vue-router';
+
+const first_name = ref('');
+const last_name = ref('');
+const email = ref('');
+const phone = ref('');
+const telegram = ref('');
+const username = ref('');
+const password = ref('');
+const password_confirm = ref('');
+
+const middle_name = ref('');
 
 
+const router = useRouter();
+
+
+async function reg() {
+  if (first_name.value == '' || last_name.value == '' || email.value == '' || username.value == '' || password.value == '') {
+    alert('Заполните все поля');
+    return
+  }
+  if (password.value != password_confirm.value) {
+    alert('Пароли не совпадают');
+    return
+  }
+  const req_raw = await axios.post(REG_URL, {
+    first_name: first_name.value,
+    last_name: last_name.value,
+    middle_name: middle_name.value,
+    email: email.value,
+    tel: phone.value,
+    telegram: telegram.value,
+    username: username.value,
+    password: password.value,
+
+  }).then((res) => {
+    console.log(res.data);
+    return res.data
+  }).catch((err) => {
+    console.log(err);
+    return
+  })
+
+  redirect(router, '/auth/login/');
+
+  return req_raw
+
+  
+
+}
 
 
 </script>
@@ -12,14 +67,16 @@ import BackButton from '@/components/BackButton.vue';
     <div class="reg">
       <div class="reg_form">
       <div class="reg__title"><h2>Регистрация</h2></div>
-      <input type="text" placeholder="Имя"/>
-      <input type="text" placeholder="Фамилия"/>
-      <input type="email" placeholder="Почта"/>
-      <input type="tel" placeholder="Номер телефона"/>
-      <input type="text" placeholder="Ник в телеграмме, например @example_king">
-      <input type="password" placeholder="Пароль"/>
-      <input type="password" placeholder="Подтверждение пароля"/>
-      <button>Зарегистрироваться</button>
+      <input type="text" placeholder="Логин" v-model="username" required/>
+      <input type="text" placeholder="Имя" v-model="first_name" required/>
+      <input type="text" placeholder="Фамилия" v-model="last_name" required/>
+      <input type="text" placeholder="Очетсво" v-model="middle_name"/>
+      <input type="email" placeholder="Почта" v-model="email" required/>
+      <input type="tel" placeholder="Номер телефона" v-model="phone"/>
+      <input type="text" placeholder="Ник в телеграмме, например @example_king" v-model="telegram" required/>
+      <input type="password" placeholder="Пароль" v-model="password" required/>
+      <input type="password" placeholder="Подтверждение пароля" v-model="password_confirm" required/>
+      <button @click="reg">Зарегистрироваться</button>
       <RouterLink to="/auth/login/">Я старенький</RouterLink>
     </div>
     </div>

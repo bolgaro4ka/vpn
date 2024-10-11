@@ -13,7 +13,7 @@ const isSiderOpen = ref(true);
 <div class="header__wrapper">
     <header>
         <div class="header__logo">
-            <div @click="$emit('toggleSider'); isSiderOpen = !isSiderOpen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black" v-if="!isSiderOpen"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg><svg v-else xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></div>
+            <div @click="$emit('toggleSider'); isSiderOpen = !isSiderOpen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black" v-if="isSiderOpen"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg><svg v-else xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></div>
             <img src="/wg.png" alt="wg.png"/>
             <h2>VPN</h2>
         </div>

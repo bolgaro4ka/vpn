@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import Block from './Block.vue';
+import { getMe } from '@/auth';
+import type { User } from '@/auth/interface';
+
+
+const me : Promise<User> = await getMe(localStorage.getItem('jwt'));
+
+
 
 
 </script>
@@ -7,7 +14,10 @@ import Block from './Block.vue';
 <template>
 <div class="desktop__wrapper">
     <div class="desktop">
-    <Block><h2>Добро пожаловать, NA</h2></Block>
+    <Block>
+        <h2>Добро пожаловать, {{ me.username }}</h2>
+        <p>{{ me.first_name }} {{ me.last_name }} {{ me.middle_name }} ({{ me.email }})</p>
+    </Block>
 </div>
 </div>
 
