@@ -12,6 +12,9 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 
+from .models import Tariff
+
+from .serializers import TariffSerializer
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
@@ -39,7 +42,10 @@ class LoginView(views.APIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 'tel': user.tel,
-                'middle_name': user.middle_name
+                'middle_name': user.middle_name,
+                'wallet': user.wallet,
+                'paid': user.paid,
+                'tariff': user.tariff
             })
         else:
             return Response({'error': 'Invalid credentials'},
@@ -96,10 +102,24 @@ def views_auth_need(request):
 @api_view(['GET'])
 def getMe(request):
     user = request.user
+    tariff_data = TariffSerializer(user.tariff).data if user.tariff else None
     return Response({'username': user.username,
                      'email': user.email,
                      'id': user.id,
                      'first_name': user.first_name,
                      'last_name': user.last_name,
                      'tel': user.tel,
-                     'middle_name': user.middle_name})
+                     'middle_name': user.middle_name,
+                     'wallet': user.wallet,
+                     'paid': user.paid,
+                     'tariff': tariff_data
+                     })
+
+
+@permission_classes([IsAuthenticated])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+@api_view(['GET'])
+def isIAuth(request):
+    return Response({'isAuth': True})
+

@@ -2,12 +2,27 @@
 </script>
 
 <template>
-<div class="about__wrapper">
-    <div class="about">
-        <h1>О проекте</h1>
-        <p>Мы продаём "защищенное подключение к серверу". И если вы здесь, то понятно дело вы знаете что это VPN.</p>
+<div>
+    <div class="about__wrapper">
+        <div class="about">
+            <h1>О проекте</h1>
+        </div>
+    </div>
 
-        <q>Работает - не трогай</q>
+    <div class="mission">
+        <b>Приватность онлайн.<br/> Свободный доступ.</b>
+        <p>Защититесь от наблюдения и слежки. Обходите цензуру.</p>
+    </div>
+
+    <div class="about__wrapper">
+        <div class="about">
+            
+            
+
+            <p>Мы продаём "защищенное подключение к серверу". И если вы здесь, то понятно дело вы знаете что это VPN.</p>
+            <h5>О нас</h5>
+            <q>Мы верим в то, что каждый должен иметь право на приватность в интернете. Мы — PVPN, русская некоммерческая организация. Мы защищаем права человека и вашу приватность в интернете с помощью свободных программ и открытых сетей.</q>
+        </div>
     </div>
 </div>
 </template>
@@ -17,6 +32,28 @@
 .about__wrapper {
     padding: 20px;
 }
+.mission {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    padding: 80px 0;
+    margin-bottom: 20px;
+
+    b {
+        text-align: center;
+        font-size:50px;
+        color: white;
+
+    }
+
+    p {
+        color: white;
+        font-size: 20px;
+    }
+}
 
 .about {
     margin: 0 auto;
@@ -25,8 +62,23 @@
     q {
         font-style: italic;
         font-weight: bold;
+        font-size:50px;
+        color: var(--primary-color);
+    }
+
+    
+
+    h5 {
+        color: var(--primary-color);
+        font-weight: bold;
         font-size: 20px;
-        color: gray;
+    }
+
+    b {
+        color: var(--primary-color);
+        font-weight: bold;
+        font-size: 20px;
+
     }
 }
 </style>

@@ -18,9 +18,9 @@ watch(route, (to, from) => {isAuthPage.value = route.path == '/auth/login/' || r
 
 <template>
 <div class="application">
-  <Header @toggleSider="() => {isSiderOpen = !isSiderOpen;}" v-if="!isAuthPage"/>
+  <Suspense><Header @toggleSider="() => {isSiderOpen = !isSiderOpen;}" v-if="!isAuthPage"/></Suspense>
   <div class="application__content">
-    <Sider :open="isSiderOpen" v-if="!isAuthPage"/>
+    <Suspense><Sider :open="isSiderOpen" v-if="!isAuthPage"/></Suspense>
     <div class="view">
       <router-view v-slot="{ Component }">
         <transition name="page-opacity" mode="out-in">

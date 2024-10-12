@@ -2,10 +2,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
+from common.models import Tariff
 
 
 # Create your models here.
 class PUser(AbstractUser):
     tel = models.CharField(max_length=15, null=True, blank=True, verbose_name='Телефон')
     middle_name = models.CharField(max_length=100, verbose_name='Отчество', null=True, blank=True)
+    tariff = models.ForeignKey(Tariff, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тариф')
+    paid = models.BooleanField(default=False, verbose_name='Оплачен')
+    wallet = models.FloatField(default=0.0, verbose_name='Баланс')
 

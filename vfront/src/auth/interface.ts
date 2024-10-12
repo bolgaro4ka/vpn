@@ -9,4 +9,6 @@ export interface User {
     email: string;
     tel: string;
     id: string;
+    wallet: number;
+    paid: boolean;
 }

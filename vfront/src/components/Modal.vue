@@ -83,7 +83,7 @@
             </svg>
           </div>
         </div>
-        <div @close="() => {emits('close')}">
+        <div @close="() => {emits('close')}" class="modal__body">
           <slot></slot>
         </div>
       </div>
@@ -94,8 +94,14 @@
 <style scoped lang="scss">
     .modal {
 
+      *:not(.modal__body) {
+        transition: none;
+      }
+
+      
+
       h3 {
-        color: var(--color-text);
+        color: white;
         user-select: none;
       }
         position: fixed;
@@ -113,16 +119,17 @@
     .modal__content {
         position: absolute;
         z-index: 10;
-        background: #2a3038;
+        background: white;
         
         
       }
       .modal__header {
         display: flex;
+        
         justify-content: space-between;
         align-items: center;
         padding: 10px;
-        background: #2a3038;
+        background: var(--primary-color);
         cursor: grab;
         resize: both;
 

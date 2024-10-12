@@ -57,6 +57,11 @@ button {
   border-radius: 10px;
 }
 
+button:hover {
+  background-color: white;
+  color: var(--primary-color);
+}
+
 h1 {
   color: var(--primary-color);
   font-weight: bold;
