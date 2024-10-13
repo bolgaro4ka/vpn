@@ -74,9 +74,14 @@ function handleOpenBuyModal(event: Event, tariff: any) {
         gap: 10px;
         border-radius: 10px;
         padding: 10px;
-        max-width: 400px;
+        width: 250px;
         border: 2px solid var(--primary-color);
         background-color: var(--background-color);
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
     }
 
 }

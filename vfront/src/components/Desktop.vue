@@ -20,8 +20,9 @@ const isOpenYouSureTariff = ref(false);
 let paid_date = new Date(me?.paid_date )
 paid_date.setMonth(paid_date.getMonth() + 1);
 
-me.paid_next_date = paid_date;
-
+if (me) {
+    me.paid_next_date = paid_date;
+}
 async function payTarriff(event: Event) {
 
     event.preventDefault();
@@ -40,8 +41,10 @@ async function payTarriffisure() {
 
     isOpenYouSureTariff.value = false;
 
-    if (res.status == 200) {
-        alert('Тариф оплачен')
+    
+    if (res.data.message) {
+        alert(res.data.message)
+
     }
 
     reload(router)
