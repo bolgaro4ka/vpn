@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import PUser
 # Register your models here
 
+admin.site.site_header = "PVPN Админка"
 
 @admin.register(PUser)
 class PUserAdmin(admin.ModelAdmin):

@@ -43,6 +43,7 @@ const me = await getMe(localStorage.getItem('jwt') as string);
                     <p>{{props.tariff.description}}</p>
                     <p>{{props.tariff.ppm}} руб/мес</p>
                 </div>
+
             </div>
             <div class="tariff__actions">
                 <button @click="changeTariff($event, props.tariff); $emit('close')">Да</button>
@@ -92,7 +93,7 @@ const me = await getMe(localStorage.getItem('jwt') as string);
         border: 2px solid var(--primary-color);
         padding: 10px;
         border-radius: 10px;
-        height: 150px;
+        height: fit-content;
         width: 200px;
     }
 
