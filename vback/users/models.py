@@ -12,4 +12,5 @@ class PUser(AbstractUser):
     tariff = models.ForeignKey(Tariff, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тариф')
     paid = models.BooleanField(default=False, verbose_name='Оплачен')
     wallet = models.FloatField(default=0.0, verbose_name='Баланс')
+    paid_date = models.DateTimeField(null=True, blank=True, verbose_name='Когда оплачено')
 

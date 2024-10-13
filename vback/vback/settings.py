@@ -17,7 +17,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CSRF_TRUSTED_ORIGINS = ['http://192.168.0.228:4000']
+CSRF_TRUSTED_ORIGINS = ['http://192.168.0.228:4000', 'http://10.66.66.5:4000']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -28,9 +28,10 @@ SECRET_KEY = 'django-insecure-ys&5unzw*@hpeykt#b6ortwrt)u0(5gb$dc3f7yi@yvv#5j=q@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.228']
+ALLOWED_HOSTS = ['192.168.0.228', '10.66.66.5']
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.0.228:4000",  # Замените на ваш фронтенд домен
+    'http://10.66.66.5:4000',
     "http://example.com",
 ]
 
@@ -135,18 +136,19 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = "ru"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

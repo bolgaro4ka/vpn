@@ -4,6 +4,12 @@ import axios from 'axios';
 import { BASE_URL } from '@/config/main';
 import Modal from './Modal.vue';
 import { ref } from 'vue';
+import TariffModal from './TariffModal.vue';
+import Loader from './Loader.vue';
+
+
+const isOpenBuyModal = ref(false);
+const curTariff = ref(null);
 
 
 
@@ -19,9 +25,15 @@ const res = await axios.get(ALL_TARIFFS,
 })
 
 
+
+
+
+
 function handleOpenBuyModal(event: Event, tariff: any) {
     event.preventDefault();
+    curTariff.value = tariff
     isOpenBuyModal.value = true;
+    
 }
 </script>
 
@@ -35,10 +47,16 @@ function handleOpenBuyModal(event: Event, tariff: any) {
                     <h3>{{tariff.name}}</h3>
                     <p>{{tariff.description}}</p>
                     <p>{{tariff.ppm}} руб/мес</p>
-                    <button @click="handleOpenBuyModal($event, tariff)">Купить</button>
+                    <button @click="handleOpenBuyModal($event, tariff)">Выбрать</button>
                 </div>
             </div>
         </div>
+        <Modal v-if="isOpenBuyModal" @close="isOpenBuyModal = false" title="Покупка тарифа">
+            <Suspense>
+                <TariffModal :tariff="curTariff" @close="isOpenBuyModal = false"/>
+                <template #fallback><Loader /></template>
+            </Suspense>
+        </Modal>
         
     </div>
 </template>

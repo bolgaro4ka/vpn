@@ -6,22 +6,47 @@ import { PAYT_URL } from '@/config/main';
 import axios from 'axios';
 
 import { ref } from 'vue';
+import Modal from './Modal.vue';
+import { reload } from '@/common';
+import { useRouter } from 'vue-router';
+
+
+const router = useRouter();
 
 
 const me : User = await getMe(localStorage.getItem('jwt') as string);
+const isOpenYouSureTariff = ref(false);
+
+let paid_date = new Date(me?.paid_date )
+paid_date.setMonth(paid_date.getMonth() + 1);
+
+me.paid_next_date = paid_date;
 
 async function payTarriff(event: Event) {
+
+    event.preventDefault();
     if (me.paid) {
         alert('Тариф уже оплачен');
         return
     }
+    isOpenYouSureTariff.value = true;
+}
+async function payTarriffisure() {
     const res = await axios.get(PAYT_URL, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('jwt')}`
         }
-    })
+    })    
 
-    console.log(res.data);
+    isOpenYouSureTariff.value = false;
+
+    if (res.status == 200) {
+        alert('Тариф оплачен')
+    }
+
+    reload(router)
+
+    
 }
 
 
@@ -29,19 +54,45 @@ async function payTarriff(event: Event) {
 
 <template>
 <div class="desktop__wrapper">
-    <div class="desktop">
+    <div class="desktop" v-if="me">
         <Block>
-            <h2>Добро пожаловать, {{ me.username }}</h2>
-            <p>{{ me.first_name }} {{ me.last_name }} {{ me.middle_name }} ({{ me.email }})</p>
+            <h2>Добро пожаловать, {{ me?.username }}</h2>
+            <p>{{ me?.first_name }} {{ me?.last_name }} {{ me?.middle_name }} ({{ me?.email }})</p>
         </Block>
         <Block >
-            <div class="desktop__tariff">
-                <h2>Ваш тариф: {{ me.tariff.name }} | ID: {{ me.tariff.id }}</h2>
-                <p>Статус: <span :class="me.paid ? 'green' : 'red'">{{ me.paid ? 'оплачен' : 'неоплачен' }}</span></p>
+            <div class="desktop__tariff" v-if="me.tariff">
+                <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}</h2>
+                <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
+                <!-- Следующяя оплата через месяц -->
+                <p>Следующая оплата: {{me.paid_next_date}}</p>
+                <p>Статус: <span :class="me?.paid ? 'green' : 'red'">{{ me?.paid ? 'оплачен' : 'неоплачен' }}</span></p>
                 <button @click="payTarriff">Оплатить</button>
+            </div>
+            <div class="desktop__tariff" v-else>
+                <h2>Похоже у вас не выбран тариф</h2>
+                <p>Вы можете выбрать тариф <RouterLink to="/buy/"><button style="width: 80px; text-align: center">здесь</button></RouterLink>!</p>
             </div>
         </Block>
     </div>
+    <div v-else class="desktop" >
+        <Block>
+            <h2>Добро пожаловать!</h2>
+            <p>Вы не авторизованы! </p><RouterLink to="/auth/login/"><button>Войти</button></RouterLink>
+        </Block>
+    </div>
+    <Modal  v-if="isOpenYouSureTariff" @close="isOpenYouSureTariff = false" title="Вы уверены?">
+        <Suspense>
+            <div style="text-align: center; padding: 10px;">
+                <h3 style="color: var(--primary-color)">Вы уверены что хотите оплатить этот тариф?</h3>
+                <p>Это снимет у вас {{me.tariff?.ppm}} рублей</p>
+                <div class="desktop__actions">
+                    <button @click="payTarriffisure">Да</button>
+                <button @click="isOpenYouSureTariff = false">Нет</button>
+                </div>
+                
+            </div>
+        </Suspense>
+    </Modal>
     
 </div>
 
@@ -49,10 +100,20 @@ async function payTarriff(event: Event) {
 
 <style lang="scss" scoped>
 .desktop__wrapper {
-    height: 200dvh;
     max-width: 100%;
 }
 
+.desktop__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    button {
+        width: 100%;
+        
+        transition: all .3s !important;
+    }
+}
 .desktop__tariff  {
     display: flex;
     flex-direction: column;

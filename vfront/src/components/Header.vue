@@ -10,7 +10,14 @@ import Loader from './Loader.vue';
 const isOpenBuyModal = ref(false);
 const emits = defineEmits(['toggleSider']);
 const auth = ref(false);
-const me : User = await getMe(localStorage.getItem('jwt') as string).then((res) => {auth.value = true; console.log(res); return res}).catch(() => {auth.value = false; return {}});
+const me : User = await getMe(localStorage.getItem('jwt') as string)
+
+
+if (me === false) {
+    auth.value = false
+} else {
+    auth.value = true
+}
 
 
 const isSiderOpen = ref(true);
@@ -33,7 +40,7 @@ const isSiderOpen = ref(true);
                 <RouterLink to="/auth/login/">Вход</RouterLink>
             </template>
             <div v-else class="header__wallet">
-                <p>У вас на кошельке: {{me.wallet}} рублей</p>
+                <p>У вас на кошельке: {{me?.wallet}} рублей</p>
                 <button @click="isOpenBuyModal = true">Пополнить кошелёк</button>
             </div>
         </div>

@@ -22,12 +22,13 @@ async function login() {
     return res.data
   }).catch((err) => {
     console.log(err);
+    alert('Неверное имя пользователя или пароль');
     return
   })
 
 
   auth(req_raw)
-  redirect(router, '/auth/login/');
+  redirect(router, '/');
 
   return req_raw
 

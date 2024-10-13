@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {type User} from './interface'
-import { USER_URL } from '@/config/main'
+import { USER_URL, CHANGET_URL } from '@/config/main'
 
 
 export function auth(user : User) {
@@ -26,9 +26,25 @@ export async function getMe(token : string) {
     }).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+        return false
     })
-
-    console.log(res)
     return res
+}
+
+export function logout() {
+    localStorage.clear()
+}
+
+export async function changeTariff(e: MouseEvent, tariff: any) {
+    e.preventDefault()
+    const res = await axios.post(CHANGET_URL,
+    {
+        tariff: tariff.id
+    }).then((res) => {
+        return res.data
+    }).catch((err) => {
+        return false
+    })
+    return res
+    
 }

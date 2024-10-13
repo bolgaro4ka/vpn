@@ -11,7 +11,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import BasicAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
-
+from datetime import timedelta
 from .models import Tariff
 
 from .serializers import TariffSerializer
@@ -45,7 +45,6 @@ class LoginView(views.APIView):
                 'middle_name': user.middle_name,
                 'wallet': user.wallet,
                 'paid': user.paid,
-                'tariff': user.tariff
             })
         else:
             return Response({'error': 'Invalid credentials'},
@@ -112,7 +111,8 @@ def getMe(request):
                      'middle_name': user.middle_name,
                      'wallet': user.wallet,
                      'paid': user.paid,
-                     'tariff': tariff_data
+                     'tariff': tariff_data,
+                     'paid_date': user.paid_date
                      })
 
 
@@ -122,4 +122,8 @@ def getMe(request):
 @api_view(['GET'])
 def isIAuth(request):
     return Response({'isAuth': True})
+
+# views.py или models.py
+
+# Планируем задачу через 10 минут
 

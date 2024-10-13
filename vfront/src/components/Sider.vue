@@ -5,12 +5,19 @@ import type { User } from '@/auth/interface';
 import { getMe } from '@/auth';
 import axios from 'axios';
 import { ATEST_URL } from '@/config/main';
+import { logout } from '@/auth';
+import { useRouter } from 'vue-router';
+import { reload } from '@/common';
 
-const auth = await axios.get(ATEST_URL, {
+const router = useRouter();
+
+const auth = ref(await axios.get(ATEST_URL, {
     headers: {
         Authorization: 'Bearer ' + localStorage.getItem('jwt')
     }
-});
+}).catch((e) => {
+    return false
+}));
 
 const props: any = defineProps({
     open: {
@@ -35,7 +42,7 @@ const props: any = defineProps({
                     <div class="sider__item"><RouterLink to="/auth/login/"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/></svg><p>Вход</p></RouterLink></div>
                 </template>
                 <template v-else>
-                    <div class="sider__item"><RouterLink to="/auth/logout/"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg><p>Выйти</p></RouterLink></div>
+                    <div class="sider__item"><div @click="logout(); reload(router);"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg><p style="color: white;">Выйти</p></div></div>
                 </template>
             </div>
         </div>

@@ -11,4 +11,7 @@ export interface User {
     id: string;
     wallet: number;
     paid: boolean;
+    paid_date: any;
+    paid_next_date?: any;
+    tariff?: any;
 }

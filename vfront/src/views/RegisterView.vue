@@ -41,6 +41,8 @@ async function reg() {
     telegram: telegram.value,
     username: username.value,
     password: password.value,
+    wallet: 0,
+    paid: 0
 
   }).then((res) => {
     console.log(res.data);

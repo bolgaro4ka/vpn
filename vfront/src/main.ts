@@ -15,6 +15,7 @@ app.use(createPinia())
 app.config.globalProperties.axios = axios
 
 axios.defaults.baseURL = BASE_URL
+axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('jwt')
 app.use(router)
 
 app.mount('#app')
