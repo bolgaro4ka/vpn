@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'users.apps.UsersConfig',
     'common.apps.CommonConfig',
+    'wg.apps.WgConfig',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
 ]

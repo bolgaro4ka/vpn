@@ -46,7 +46,7 @@ function handleOpenBuyModal(event: Event, tariff: any) {
                     <img :src="BASE_URL+tariff.image" alt=""> 
                     <h3>{{tariff.name}}</h3>
                     <p>{{tariff.description}}</p>
-                    <p>{{tariff.ppm}} руб/мес</p>
+                    <p class="shop__tarrif__price">{{tariff.ppm}} руб/мес</p>
                     <button @click="handleOpenBuyModal($event, tariff)">Выбрать</button>
                 </div>
             </div>
@@ -78,10 +78,27 @@ function handleOpenBuyModal(event: Event, tariff: any) {
         border: 2px solid var(--primary-color);
         background-color: var(--background-color);
 
+        &__price {
+            font-weight: bold;
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-top: auto;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        &__price:hover {
+            animation-name: price_omg;
+            animation-duration: 2s;
+            animation-timing-function: ease-in-out;
+
+        }
+
         img {
             width: 100%;
             border-radius: 10px;
         }
+
     }
 
 }
@@ -89,4 +106,22 @@ function handleOpenBuyModal(event: Event, tariff: any) {
 .shop {
     padding: 10px;
 }
+
+@keyframes price_omg {
+
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    
+    50% {
+        transform: scale(2) rotate(360deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+    
+}   
+
+
 </style>

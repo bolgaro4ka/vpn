@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from rest_framework import views, status
 from rest_framework.response import Response
 from django.utils import timezone
-
+from wg.functions import create_wg_config 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import permissions
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -56,5 +56,6 @@ def pay(request):
     user.wallet -= tariff.ppm
     user.paid = True
     user.paid_date = timezone.now()
+    user.file_path = create_wg_config(user.id)
     user.save()
     return Response({'message': 'Подписка успешно оплачена'})

@@ -31,6 +31,11 @@ const router = createRouter({
       path: '/buy',
       name: 'buy',
       component: () => import('../views/ShopView.vue')
+    },
+    {
+      path: '/tutorials/how-install-vpn-file',
+      name: 'how-install-vpn-file',
+      component: () => import('../views/HowToInstallFileView.vue')
     }
   ]
 })

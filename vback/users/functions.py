@@ -2,6 +2,7 @@ from users.models import PUser
 from django.utils import timezone
 import time
 import threading
+from wg.functions import delete_wg_config
 
 
 def null_if_expired_pay():
@@ -13,12 +14,14 @@ def null_if_expired_pay():
             try:
                 if user.paid and user.paid_date and user.paid_date + timezone.timedelta(minutes=1) < timezone.now():
                     user.paid = False
+                    delete_wg_config(user.id)
+                    user.file_path = None
                     user.save()
 
             except Exception as e:
                 print(e)
 
-        time.sleep(20)
+        time.sleep(10)
 
 
 def run_in_new_null_if_expired_pay():

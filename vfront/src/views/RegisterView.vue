@@ -8,8 +8,7 @@ import type { User } from '@/auth/interface';
 import { redirect } from '@/common';
 import { useRouter } from 'vue-router';
 
-const first_name = ref('');
-const last_name = ref('');
+
 const email = ref('');
 const phone = ref('');
 const telegram = ref('');
@@ -17,14 +16,14 @@ const username = ref('');
 const password = ref('');
 const password_confirm = ref('');
 
-const middle_name = ref('');
+const full_name = ref('');
 
 
 const router = useRouter();
 
 
 async function reg() {
-  if (first_name.value == '' || last_name.value == '' || email.value == '' || username.value == '' || password.value == '') {
+  if (full_name.value == '' || email.value == '' || username.value == '' || password.value == '') {
     alert('Заполните все поля');
     return
   }
@@ -33,9 +32,9 @@ async function reg() {
     return
   }
   const req_raw = await axios.post(REG_URL, {
-    first_name: first_name.value,
-    last_name: last_name.value,
-    middle_name: middle_name.value,
+    first_name: full_name.value.split(' ')[0],
+    last_name:  full_name.value.split(' ')[1],
+    middle_name: full_name.value.split(' ')[2],
     email: email.value,
     tel: phone.value,
     telegram: telegram.value,
@@ -48,13 +47,15 @@ async function reg() {
     console.log(res.data);
     return res.data
   }).catch((err) => {
-    console.log(err);
+    alert('Что-то пошло не так!');
     return
   })
 
-  redirect(router, '/auth/login/');
-
-  return req_raw
+  if (req_raw.status == 200) {
+    redirect(router, '/auth/login/');
+    return req_raw
+  }
+  
 
   
 
@@ -70,9 +71,7 @@ async function reg() {
       <div class="reg_form">
       <div class="reg__title"><h2>Регистрация</h2></div>
       <input type="text" placeholder="Логин" v-model="username" required/>
-      <input type="text" placeholder="Имя" v-model="first_name" required/>
-      <input type="text" placeholder="Фамилия" v-model="last_name" required/>
-      <input type="text" placeholder="Очетсво" v-model="middle_name"/>
+      <input type="text" placeholder="Фамилия Имя Очество (при наличии)" v-model="full_name" required/>
       <input type="email" placeholder="Почта" v-model="email" required/>
       <input type="tel" placeholder="Номер телефона" v-model="phone"/>
       <input type="text" placeholder="Ник в телеграмме, например @example_king" v-model="telegram" required/>

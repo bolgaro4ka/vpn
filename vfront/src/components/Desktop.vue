@@ -9,6 +9,7 @@ import { ref } from 'vue';
 import Modal from './Modal.vue';
 import { reload } from '@/common';
 import { useRouter } from 'vue-router';
+import FileBlock from './FileBlock.vue';
 
 
 const router = useRouter();
@@ -59,23 +60,31 @@ async function payTarriffisure() {
 <div class="desktop__wrapper">
     <div class="desktop" v-if="me">
         <Block>
-            <h2>Добро пожаловать, {{ me?.username }}</h2>
+            <h2>Добро пожаловать, {{ me?.username }} (ID: {{ me?.id }})</h2>
             <p>{{ me?.first_name }} {{ me?.last_name }} {{ me?.middle_name }} ({{ me?.email }})</p>
         </Block>
-        <Block >
-            <div class="desktop__tariff" v-if="me.tariff">
-                <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}</h2>
-                <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
-                <!-- Следующяя оплата через месяц -->
-                <p>Следующая оплата: {{me.paid_next_date}}</p>
-                <p>Статус: <span :class="me?.paid ? 'green' : 'red'">{{ me?.paid ? 'оплачен' : 'неоплачен' }}</span></p>
-                <button @click="payTarriff">Оплатить</button>
-            </div>
-            <div class="desktop__tariff" v-else>
-                <h2>Похоже у вас не выбран тариф</h2>
-                <p>Вы можете выбрать тариф <RouterLink to="/buy/"><button style="width: 80px; text-align: center">здесь</button></RouterLink>!</p>
-            </div>
-        </Block>
+        <div class="desktop__inline">
+            <Block :style="'height: 100%;' + (me.paid ? 'width: 65%;' : 'width: 100%;')" >
+                <div class="desktop__tariff" v-if="me.tariff">
+                    <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}</h2>
+                    <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
+                    <!-- Следующяя оплата через месяц -->
+                    <p>Следующая оплата: {{me.paid_next_date}}</p>
+                    <p>Статус: <span :class="me?.paid ? 'green' : 'red'">{{ me?.paid ? 'оплачен' : 'неоплачен' }}</span></p>
+                    <button @click="payTarriff">Оплатить</button>
+                </div>
+                <div class="desktop__tariff" v-else>
+                    <h2>Похоже у вас не выбран тариф</h2>
+                    <p>Вы можете выбрать тариф <RouterLink to="/buy/"><button style="width: 80px; text-align: center">здесь</button></RouterLink>!</p>
+                </div>
+            </Block>
+            <Block style="height: 100%; width: 35%;" v-if="me.paid">
+                <Suspense>
+                    <FileBlock/>
+                </Suspense>
+                
+            </Block>
+        </div>
     </div>
     <div v-else class="desktop" >
         <Block>
@@ -104,6 +113,12 @@ async function payTarriffisure() {
 <style lang="scss" scoped>
 .desktop__wrapper {
     max-width: 100%;
+}
+
+.desktop__inline {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .desktop__actions {

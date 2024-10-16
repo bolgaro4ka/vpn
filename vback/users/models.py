@@ -13,4 +13,4 @@ class PUser(AbstractUser):
     paid = models.BooleanField(default=False, verbose_name='Оплачен')
     wallet = models.FloatField(default=0.0, verbose_name='Баланс')
     paid_date = models.DateTimeField(null=True, blank=True, verbose_name='Когда оплачено')
-
+    file_path = models.CharField(max_length=255, null=True, blank=True, verbose_name='Путь к файлу')

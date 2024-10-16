@@ -112,7 +112,8 @@ def getMe(request):
                      'wallet': user.wallet,
                      'paid': user.paid,
                      'tariff': tariff_data,
-                     'paid_date': user.paid_date
+                     'paid_date': user.paid_date,
+                     'file': user.file_path
                      })
 
 
