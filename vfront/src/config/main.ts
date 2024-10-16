@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://10.66.66.5:7000/'
+export const BASE_URL = 'http://localhost:7000/'
 
 export const API_URL = BASE_URL+'api/'
 
