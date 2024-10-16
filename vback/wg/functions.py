@@ -1,5 +1,3 @@
-from wgconfig import WGConfig
-from wgconfig.wgexec import generate_privatekey, get_publickey
 from users.models import PUser
 import subprocess
 import os
