@@ -17,7 +17,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CSRF_TRUSTED_ORIGINS = ['http://192.168.0.228:4000', 'http://10.66.66.5:4000', 'http://localhost:4000']
+CSRF_TRUSTED_ORIGINS = ['http://192.168.0.228:4000', 'http://10.66.66.5:4000', 'http://localhost:4000', 'http://212.3.131.59', 'http://212.3.131.59:4000', 'http://212.3.131.59:7000']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -28,12 +28,15 @@ SECRET_KEY = 'django-insecure-ys&5unzw*@hpeykt#b6ortwrt)u0(5gb$dc3f7yi@yvv#5j=q@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.228', '10.66.66.5', 'localhost']
+ALLOWED_HOSTS = ['192.168.0.228', '10.66.66.5', 'localhost', '212.3.131.59']
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.0.228:4000",  # Замените на ваш фронтенд домен
     'http://10.66.66.5:4000',
     "http://example.com",
-    'http://localhost:4000'
+    'http://localhost:4000',
+    'http://212.3.131.59',
+    'http://212.3.131.59:4000',
+    'http://212.3.131.59:7000'
 ]
 
 
