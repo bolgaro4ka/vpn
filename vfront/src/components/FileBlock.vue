@@ -29,7 +29,13 @@ const me = await getMe(localStorage.getItem('jwt') as string);
 
     svg {
         transform: scale(4);
-        margin: 47px;
+        margin-top: 47px;
+        margin-bottom: 47px;
+        align-self: center;
+    }
+
+    * {
+        text-align: center;
     }
 }
 </style>

@@ -98,6 +98,13 @@ const isSiderOpen = ref(true);
         align-items: center;
         width: 100%;
     }
+
+    @media screen and (max-width: 640px) {
+        .header__wallet p {
+            display: none;
+        }
+    }
+    
     
 
 }

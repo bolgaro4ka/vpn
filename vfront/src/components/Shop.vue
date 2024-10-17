@@ -103,8 +103,24 @@ function handleOpenBuyModal(event: Event, tariff: any) {
 
 }
 
-.shop {
+.shop__wrapper {
     padding: 10px;
+}
+
+.shop__tarrifs {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    .shop__tarrif {
+        height: 500px;
+    }
+}
+
+.shop {
+    width: 100%;
 }
 
 @keyframes price_omg {

@@ -59,6 +59,10 @@ async function payTarriffisure() {
 <template>
 <div class="desktop__wrapper">
     <div class="desktop" v-if="me">
+        <Block v-if="me?.wallet" class="mobile__price">
+            <p>У вас на кошельке:<br/> <h2>{{me?.wallet}} рублей</h2></p>
+
+        </Block>
         <Block>
             <h2>Добро пожаловать, {{ me?.username }} (ID: {{ me?.id }})</h2>
             <p>{{ me?.first_name }} {{ me?.last_name }} {{ me?.middle_name }} ({{ me?.email }})</p>
@@ -170,5 +174,24 @@ async function payTarriffisure() {
         border-radius: 5px;
         background-color: white;
     }
+}
+
+.mobile__price {
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .desktop__inline {
+        flex-direction: column;
+        * {
+            width: 100% !important;
+        }
+
+    }
+
+    .mobile__price {
+        display: block;
+    }
+    
 }
 </style>

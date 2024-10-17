@@ -11,12 +11,12 @@ const me = await getMe(localStorage.getItem('jwt') as string);
         <div class="buy">
             <div class="buy__qr">
                 <img src="/pay_qr.jpg">
-                <a href="https://www.sberbank.com/sms/pbpn?requisiteNumber=9525341128">https://www.sberbank.com/sms/pbpn</a>
+                <a href="https://www.sberbank.com/sms/pbpn?requisiteNumber=9525341128" class="buy__link">https://www.sberbank.com/sms/pbpn</a>
             </div>
             <div class="buy__block">
                 <h2>Чтобы поплнить кошелёк вам нужно:</h2>
                 <ol>
-                    <li>Отсканируйте QR-код или перейдите по ссылке</li>
+                    <li>Отсканируйте QR-код <span class="buy__textmodile">(на пк)</span> или перейдите по ссылке <span class="buy__textmodile">выше</span></li>
                     <li>Вас перекинет в официальное приложение Сбербанка</li>
                     <li>Введите нужную сумму</li>
                     <li>В комментарии к платежу <b>ОБЯЗАТЕЛЬНО</b> укажите этот ID: {{me?.id}}, <br/>иначе мы не узнаем кто послал платёж</li>
@@ -29,8 +29,11 @@ const me = await getMe(localStorage.getItem('jwt') as string);
                 <a href="https://t.me/papyas_07"><button style="transition: all .3s !important;">Поддержка 2</button></a>
                 </div>
                 
+                
             </div>
+            <button class="buy__button">Я оплатил!</button>
         </div>
+        
     </div>
 </template>
 
@@ -56,6 +59,44 @@ img {
     }
 }
 
+.buy__wrapper {
+    * {
+        transition: all .3s !important;
+    }
+    
+}
 
+.buy__textmodile {
+    display: none;
+}
+
+.buy__button {
+    display: block;
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 790px) {
+    .buy {
+        flex-direction: column;
+    }
+
+    .buy__wrapper {
+        width: 320px;
+    }
+
+    img {
+        display: none;
+    }
+
+    .buy__link {
+        font-size: 18px;
+        word-wrap: break-word;
+    }
+
+    .buy__textmodile {
+        display: inline;
+    }
+    
+}
 
 </style>

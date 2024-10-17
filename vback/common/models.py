@@ -17,3 +17,4 @@ class Tariff(models.Model):
     class Meta:
         verbose_name = 'Тариф'
         verbose_name_plural = 'Тарифы'
+
