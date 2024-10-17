@@ -8,7 +8,8 @@ def create_wg_config(user_id):
 
     user = PUser.objects.all().filter(id=user_id)[0]
     name = f's1_{user.username[:5]}_{user.tel[-4:]}'
-    os.system(f'echo {name}')
+    os.system(f'bash ./media/vpns/wireguard-newuser.sh {name}.conf')
+    print('[INFO] create_wg_config')
     return name+'.conf'
 
 
@@ -17,7 +18,8 @@ def delete_wg_config(user_id):
 
     user = PUser.objects.all().filter(id=user_id)[0]
     name = f's1_{user.username[:5]}_{user.tel[-4:]}'
-    os.system(f'echo {name}_____DELETE___')
+    os.system(f'bash ./media/vpns/wireguard-deluser.sh {name}.conf')
+    print('[INFO] delete_wg_config')
     return name+'.conf'
 
 
