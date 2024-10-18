@@ -60,17 +60,16 @@ async function payTarriffisure() {
 <div class="desktop__wrapper">
     <div class="desktop" v-if="me">
         <Block v-if="me?.wallet" class="mobile__price">
-            <p>У вас на кошельке:<br/> <h2>{{me?.wallet}} рублей</h2></p>
+            <p>У вас на кошельке:<br/> <b>{{me?.wallet}} рублей</b></p>
 
         </Block>
         <Block>
             <h2>Добро пожаловать, {{ me?.username }} (ID: {{ me?.id }})</h2>
             <p>{{ me?.first_name }} {{ me?.last_name }} {{ me?.middle_name }} ({{ me?.email }})</p>
         </Block>
-        <div class="desktop__inline">
-            <Block :style="'height: 100%;' + (me.paid ? 'width: 65%;' : 'width: 100%;')" >
+            <Block :style="'height: 100%; width: 100%;'" >
                 <div class="desktop__tariff" v-if="me.tariff">
-                    <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}</h2>
+                    <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }} (Кол-во файлов: {{ me?.mof }})</h2>
                     <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
                     <!-- Следующяя оплата через месяц -->
                     <p>Следующая оплата: {{me.paid_next_date}}</p>
@@ -82,13 +81,12 @@ async function payTarriffisure() {
                     <p>Вы можете выбрать тариф <RouterLink to="/buy/"><button style="width: 80px; text-align: center">здесь</button></RouterLink>!</p>
                 </div>
             </Block>
-            <Block style="height: 100%; width: 35%;" v-if="me.paid">
+            <Block style="height: 100%; width: 100%;" v-if="me.paid">
                 <Suspense>
                     <FileBlock/>
                 </Suspense>
                 
             </Block>
-        </div>
     </div>
     <div v-else class="desktop" >
         <Block>
@@ -100,7 +98,7 @@ async function payTarriffisure() {
         <Suspense>
             <div style="text-align: center; padding: 10px;">
                 <h3 style="color: var(--primary-color)">Вы уверены что хотите оплатить этот тариф?</h3>
-                <p>Это снимет у вас {{me.tariff?.ppm}} рублей</p>
+                <p>Это снимет у вас {{me.tariff?.ppm*me.mof}} рублей</p>
                 <div class="desktop__actions">
                     <button @click="payTarriffisure">Да</button>
                 <button @click="isOpenYouSureTariff = false">Нет</button>

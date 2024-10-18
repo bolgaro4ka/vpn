@@ -35,11 +35,13 @@ export function logout() {
     localStorage.clear()
 }
 
-export async function changeTariff(e: MouseEvent, tariff: any) {
+export async function changeTariff(e: MouseEvent, tariff: any, mof: number) {
     e.preventDefault()
+    console.log(mof)
     const res = await axios.post(CHANGET_URL,
     {
-        tariff: tariff.id
+        tariff: tariff.id,
+        number_of_files: mof
     }).then((res) => {
         return res.data
     }).catch((err) => {

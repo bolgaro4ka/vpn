@@ -2,6 +2,7 @@
 
 import { getMe } from '@/auth';
 import { changeTariff } from '@/auth';
+import { ref } from 'vue';
 
 const props = defineProps({
     tariff: {
@@ -11,6 +12,8 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['close']);
+
+const peoples = ref(1)
 
 const me = await getMe(localStorage.getItem('jwt') as string);
 
@@ -45,8 +48,11 @@ const me = await getMe(localStorage.getItem('jwt') as string);
                 </div>
 
             </div>
+            <p>Количество файлов</p>
+            <input type="range" min="1" max="5" v-model="peoples"/>
+            <p>{{peoples}} человек(-a)</p>
             <div class="tariff__actions">
-                <button @click="changeTariff($event, props.tariff); $emit('close')">Да</button>
+                <button @click="changeTariff($event, props.tariff, peoples); $emit('close')">Да</button>
                 <button @click="$emit('close')">Нет</button>
             </div>
         </div>
@@ -62,6 +68,42 @@ const me = await getMe(localStorage.getItem('jwt') as string);
         font-size: 20px;
         color: var(--primary-color);
     }
+}
+
+input[type="range"]
+{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 18px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--primary-color);
+    border: 0px solid var(--primary-color);
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    margin-top: -7px;
+    box-shadow: calc(-100vmax - 18px) 0 0 100vmax  var(--primary-color);
+    clip-path: polygon(
+        100% 0,
+        2px 0,
+        0 7px,
+        -100vmax 7px,
+        -100vmax 11px,
+        0 11px,
+        2px 100%,
+        100% 100%
+    );
 }
 
 .tariff__actions {

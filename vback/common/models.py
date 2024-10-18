@@ -18,3 +18,13 @@ class Tariff(models.Model):
         verbose_name = 'Тариф'
         verbose_name_plural = 'Тарифы'
 
+class Payment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    user = models.ForeignKey('users.PUser', on_delete=models.CASCADE, verbose_name='Пользователь')
+
+    def __str__(self):
+        return self.user.id
+    
+    class Meta:
+        verbose_name = 'Платеж'
+        verbose_name_plural = 'Платежи'

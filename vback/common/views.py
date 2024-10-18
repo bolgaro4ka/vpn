@@ -37,8 +37,10 @@ def getTariffs(request):
 @api_view(['POST'])
 def changeTariff(request):
     tariff = request.data.get('tariff')
+    mof = request.data.get('number_of_files')
     user = request.user
     user.tariff = Tariff.objects.get(pk=tariff)
+    user.number_of_files = mof
     user.save()
     return Response({'message': 'Тариф успешно изменен'})
 
@@ -50,12 +52,24 @@ def pay(request):
     user = request.user
     tariff = user.tariff
 
-    if (user.wallet < tariff.ppm):
+    if (user.wallet < tariff.ppm*user.number_of_files):
         return Response({'message': 'Недостаточно средств'})
 
-    user.wallet -= tariff.ppm
+    user.wallet -= tariff.ppm*user.number_of_files
     user.paid = True
     user.paid_date = timezone.now()
-    user.file_path = create_wg_config(user.id)
+    user.file_path = ''
+
+    for iteration in range(user.number_of_files):
+        user.file_path += create_wg_config(user.id, iteration) + ';'
+
     user.save()
     return Response({'message': 'Подписка успешно оплачена'})
+
+
+@permission_classes([permissions.IsAuthenticated])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+@api_view(['POST'])
+def create_payment_req(request):
+    return 0

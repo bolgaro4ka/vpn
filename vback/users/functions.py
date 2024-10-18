@@ -14,7 +14,8 @@ def null_if_expired_pay():
             try:
                 if user.paid and user.paid_date and user.paid_date + timezone.timedelta(minutes=1) < timezone.now():
                     user.paid = False
-                    delete_wg_config(user.id)
+                    for iteration in range(user.number_of_files):
+                        delete_wg_config(user.id, iteration)
                     user.file_path = None
                     user.save()
 
