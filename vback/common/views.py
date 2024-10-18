@@ -13,7 +13,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 
 
-from .models import Tariff
+from .models import Tariff, Payment
 from .serializers import TariffSerializer
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -39,6 +39,9 @@ def changeTariff(request):
     tariff = request.data.get('tariff')
     mof = request.data.get('number_of_files')
     user = request.user
+
+    if user.paid:
+        return Response({'message': 'Вы уже оплатили подписку на другой тариф'}, status=status.HTTP_400_BAD_REQUEST)
     user.tariff = Tariff.objects.get(pk=tariff)
     user.number_of_files = mof
     user.save()
@@ -72,4 +75,10 @@ def pay(request):
                          BasicAuthentication])
 @api_view(['POST'])
 def create_payment_req(request):
-    return 0
+    user = request.user
+
+    if Payment.objects.filter(user=user).exists():
+        return Response({'error': 'Платеж для данного пользователя уже существует.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    payment = Payment.objects.create(user=user)
+    return Response({'payment_id': payment.id})

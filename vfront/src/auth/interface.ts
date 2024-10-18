@@ -14,4 +14,5 @@ export interface User {
     paid_date: any;
     paid_next_date?: any;
     tariff?: any;
+    mof: number;
 }

@@ -45,8 +45,8 @@ export async function changeTariff(e: MouseEvent, tariff: any, mof: number) {
     }).then((res) => {
         return res.data
     }).catch((err) => {
+        alert('Вы уже оплатили другой тариф. Переключение не удалось.')
         return false
     })
-    return res
     
 }

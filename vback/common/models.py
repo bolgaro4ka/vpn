@@ -23,7 +23,7 @@ class Payment(models.Model):
     user = models.ForeignKey('users.PUser', on_delete=models.CASCADE, verbose_name='Пользователь')
 
     def __str__(self):
-        return self.user.id
+        return str(self.user.id)
     
     class Meta:
         verbose_name = 'Платеж'

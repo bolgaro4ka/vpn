@@ -98,7 +98,7 @@ async function payTarriffisure() {
         <Suspense>
             <div style="text-align: center; padding: 10px;">
                 <h3 style="color: var(--primary-color)">Вы уверены что хотите оплатить этот тариф?</h3>
-                <p>Это снимет у вас {{me.tariff?.ppm*me.mof}} рублей</p>
+                <p>Это снимет у вас {{me.tariff?.ppm*me?.mof}} рублей</p>
                 <div class="desktop__actions">
                     <button @click="payTarriffisure">Да</button>
                 <button @click="isOpenYouSureTariff = false">Нет</button>

@@ -1,8 +1,22 @@
 <script setup lang="ts">
 
 import { getMe } from '@/auth';
+import type { User } from '@/auth/interface';
+import { CREATE_PAYMENT_ENDPOINT } from '@/config/main';
+import axios from 'axios';
 
 const me = await getMe(localStorage.getItem('jwt') as string);
+
+async function createPaymentRequest(e : MouseEvent) {
+    const res = await axios.post(CREATE_PAYMENT_ENDPOINT, {
+    }).then((res) => {
+        alert('Запрос на платёж создан')
+        return res.data
+    }).catch((res) => {
+        alert('Похоже вы уже создавали запрос на платёж. Если это не так, обратитесь в поддержку!')
+        return res.data
+    })
+}
 
 </script>
 
@@ -20,6 +34,7 @@ const me = await getMe(localStorage.getItem('jwt') as string);
                     <li>Вас перекинет в официальное приложение Сбербанка</li>
                     <li>Введите нужную сумму</li>
                     <li>В комментарии к платежу <b>ОБЯЗАТЕЛЬНО</b> укажите этот ID: {{me?.id}}, <br/>иначе мы не узнаем кто послал платёж</li>
+                    <li>Нажмите на эту кнопку "я оплатил" справо</li>
                     <!-- <li>Сохраните чек, так будет легче разобраться если что-то пойдёт не так</li> -->
                 </ol>
                 <h3>Ваш платёж будет обработан в течении дня. Так<br/> как это не автоматический процесс.</h3>
@@ -31,7 +46,7 @@ const me = await getMe(localStorage.getItem('jwt') as string);
                 
                 
             </div>
-            <button class="buy__button">Я оплатил!</button>
+            <button class="buy__button" @click="createPaymentRequest">Я оплатил!</button>
         </div>
         
     </div>
