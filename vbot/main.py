@@ -28,10 +28,13 @@ async def user_registration(msg: types.Message):
     current_chat = msg.chat.id
     await bot.send_message(current_chat, 'Ну поехали.', parse_mode="HTML")
 
+
 @dp.message(Command("m"))
 async def user_registration(msg: types.Message):
     current_chat = msg.chat.id
-    await bot.send_message(current_chat, 'Ну поехали.', parse_mode="HTML")
+    res = requests.get(os.getenv("URL") + "api/common/gpr/")
+    await bot.send_message(current_chat, str(res.json()), parse_mode="HTML")
+
 
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)

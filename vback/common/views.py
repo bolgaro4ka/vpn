@@ -82,3 +82,23 @@ def create_payment_req(request):
 
     payment = Payment.objects.create(user=user)
     return Response({'payment_id': payment.id})
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+def get_all_payments(request):
+
+    payments = Payment.objects.all()
+    res = []
+
+    for item in payments:
+        res.append({
+            'id': item.user.id,
+            'created_at': item.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+        })
+
+    return Response(res)
+
+
