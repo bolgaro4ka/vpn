@@ -54,11 +54,11 @@ async function reg() {
     console.log(res.data);
     return res.data
   }).catch((err) => {
-    alert('Что-то пошло не так!');
+    alert('Что-то пошло не так! Возможно вы уже зарегистрированны!');
     return
   })
 
-  if (req_raw.status == 200) {
+  if (req_raw.status == 201) {
     redirect(router, '/auth/login/');
     return req_raw
   }

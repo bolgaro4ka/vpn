@@ -99,6 +99,12 @@ function handleOpenBuyModal(event: Event, tariff: any) {
             border-radius: 10px;
         }
 
+        h3 {
+            font-weight: 700;
+            font-size: 25px;
+            color: var(--primary-color)
+        }
+
     }
 
 }

@@ -27,7 +27,7 @@ const isSiderOpen = ref(true);
 <div class="header__wrapper">
     <header>
         <div class="header__logo">
-            <div @click="$emit('toggleSider'); isSiderOpen = !isSiderOpen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black" v-if="isSiderOpen"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg><svg v-else xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></div>
+            <div @click="$emit('toggleSider'); isSiderOpen = !isSiderOpen" ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black" v-if="isSiderOpen"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg><svg v-else xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></div>
             <RouterLink to="/" class="logo">
                 <img src="/wg.png" alt="wg.png"/>
                 <h2>PVPN</h2>
@@ -40,7 +40,7 @@ const isSiderOpen = ref(true);
                 <RouterLink to="/auth/login/">Вход</RouterLink>
             </template>
             <div v-else class="header__wallet">
-                <p>У вас на кошельке: {{me?.wallet}} рублей</p>
+                <p>Баланс: {{me?.wallet}} рублей</p>
                 <button @click="isOpenBuyModal = true">Пополнить кошелёк</button>
             </div>
         </div>
@@ -63,32 +63,53 @@ const isSiderOpen = ref(true);
         justify-content: center;
         align-items: center;
         gap: 10px;
+
+        p {
+            font-size: 20px;
+            margin-right: 5px;
+        }
     }
-    height: 40px;
+
+    h2 {
+        font-size: 30px;
+    }
+
+    height: 60px;
     width: 100%;
     display: flex;
     align-items: center;
     padding-right: 20px;
     padding-left: 5px;
 
+    button {
+        font-size: 18px;
+
+    }
+
     .header__logo {
         display: flex;
         align-items: center;
         gap: 10px;
+        margin-left: 15px;
 
         .logo {
             display: flex;
             align-items: center;
             cursor: pointer;
             gap: 10px;
+            margin-left: 15px;
         }
+
+        
 
         svg {
             position: relative;
             top: 3.5px;
+            height: 30px;
+            width: 30px;
         }
     img {
-        height: 30px;
+        height: 40px;
         border-radius: 1000px;
     }
 }

@@ -41,7 +41,7 @@ watch(route, (to, from) => {isAuthPage.value = route.path == '/auth/login/' || r
 
   &__content {
     display: flex;
-    height: calc(100dvh - 40px);
+    height: calc(100dvh - 60px);
     width: 100%;
   }
 }

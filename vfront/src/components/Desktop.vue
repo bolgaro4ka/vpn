@@ -69,7 +69,7 @@ async function payTarriffisure() {
         </Block>
             <Block :style="'height: 100%; width: 100%;'" >
                 <div class="desktop__tariff" v-if="me.tariff">
-                    <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{me?.tariff.ppm}} руб/мес</h2>
+                    <h2 class="desktop__tariff_you">Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{me?.tariff.ppm}} руб/мес</h2>
                     <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
                     <!-- Следующяя оплата через месяц -->
                     <p>Следующая оплата: {{me.paid_next_date}}</p>
@@ -98,7 +98,7 @@ async function payTarriffisure() {
         <Suspense>
             <div style="text-align: center; padding: 10px;">
                 <h3 style="color: var(--primary-color)">Вы уверены что хотите оплатить этот тариф?</h3>
-                <p>Это снимет у вас {{me.tariff?.ppm*me?.mof}} рублей</p>
+                <p>Это снимет у вас {{me.tariff?.ppm+me?.mof*100}} рублей</p>
                 <div class="desktop__actions">
                     <button @click="payTarriffisure">Да</button>
                 <button @click="isOpenYouSureTariff = false">Нет</button>
@@ -117,7 +117,7 @@ async function payTarriffisure() {
     max-width: 100%;
 
     h2 {
-        font-size: 42px;
+        font-size: 36px;
     }
     
     p {
@@ -131,6 +131,9 @@ async function payTarriffisure() {
     align-items: center;
 }
 
+.desktop__tariff_you {
+    font-size: 30px !important;
+}
 
 
 .desktop__actions {
