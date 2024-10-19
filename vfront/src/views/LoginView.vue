@@ -28,7 +28,9 @@ async function login() {
 
 
   auth(req_raw)
+
   redirect(router, '/');
+  localStorage.setItem('reloadNeed', '1')
 
   return req_raw
 

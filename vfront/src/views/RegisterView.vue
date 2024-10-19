@@ -58,7 +58,7 @@ async function reg() {
     return
   })
 
-  if (req_raw.status == 201) {
+  if (req_raw.status == 200 || req_raw.status == 201) {
     redirect(router, '/auth/login/');
     return req_raw
   }
