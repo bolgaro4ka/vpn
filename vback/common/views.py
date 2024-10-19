@@ -110,7 +110,7 @@ def get_all_payments(request):
 def delete_payment(request):
 
     payment_id = request.data.get('payment_id')
-    print(payment_id, Payment.objects.filter(id=payment_id).exists(), Payment.objects.filter(id=payment_id)[0].exists())
+    print(payment_id, Payment.objects.filter(id=payment_id).exists())
 
     if not Payment.objects.filter(id=payment_id).exists():
         return Response({'error': 'Платеж не найден.'}, status=status.HTTP_404_NOT_FOUND)

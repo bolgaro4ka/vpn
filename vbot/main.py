@@ -56,14 +56,16 @@ async def callback_query(call: types.CallbackQuery):
             if res.status_code == 200:
                 await bot.send_message(call.from_user.id, f'Платёж оплачен. Не забудьте закинуть лавехи пользователю.\n\n PID: {payment_id}', parse_mode="HTML")
             else:
-                await bot.send_message(call.from_user.id, f'Платёж не оплачен (ошибка).\n\n Причина: {res.json()['error']}\n\n PID: {payment_id}', parse_mode="HTML")
+                err = res.json()['error']
+                await bot.send_message(call.from_user.id, f'Платёж не оплачен (ошибка).\n\n Причина: {err}\n\n PID: {payment_id}', parse_mode="HTML")
 
         if action == '0':
             res = requests.post(os.getenv("BASE_URL") + "api/common/dpr/", json={'payment_id': payment_id})
             if res.status_code == 200:
                 await bot.send_message(call.from_user.id, f'Платёж отменен. PID: {payment_id}', parse_mode="HTML")
             else:
-                await bot.send_message(call.from_user.id, f'Платёж не оплачен (ошибка).\n\n Причина: {res.json()['error']}\n\n PID: {payment_id}', parse_mode="HTML")
+                err=res.json()['error']
+                await bot.send_message(call.from_user.id, f'Платёж не оплачен (ошибка).\n\n Причина: {err}\n\n PID: {payment_id}', parse_mode="HTML")
 
         if action == '2':
             await bot.send_message(call.from_user.id, f'Платёж пропущен. PID: {payment_id}', parse_mode="HTML")
