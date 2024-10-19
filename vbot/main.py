@@ -26,24 +26,27 @@ bot = Bot(token=SECRET_KEY)
 logging.basicConfig(level=logging.INFO)
 dp = Dispatcher()
 admins = ['1587780429', '1636897876']
+current_payment_req = 0
 
 async def check_payments():
     """Фоновая задача для периодической проверки новых платежей."""
+    global current_payment_req
     while True:
         try:
             res = requests.get(BASE_URL + "api/common/gpr/")
             payments = res.json()
 
-            if len(payments) == 0:
+            if len(payments) == current_payment_req:
                 logging.info("Нет новых платежей")
             else:
+                current_payment_req = len(payments)
                 for aid in admins:
                     await bot.send_message(aid, f"Платёж: {str(res.json()[0]['payment_id'])} \n\nПользователь: {str(res.json()[0]['user_id'])} \n\n Дата: {str(res.json()[0]['created_at'])} \n\n Это всё что мы знаем", parse_mode="HTML", reply_markup=get_keyboard_go_or_die(res.json()[0]['payment_id']))
         except Exception as e:
             logging.error(f"Ошибка при проверке платежей: {e}")
 
         # Задержка между проверками (например, 60 секунд)
-        await asyncio.sleep(60)
+        await asyncio.sleep(10)
 
 
 @dp.message(Command("start"))
@@ -72,19 +75,23 @@ async def user_registration(msg: types.Message):
 @dp.message()
 async def echo(msg: types.Message):
     current_chat = str(msg.chat.id)
+    user_id = None
+    money = None
     if not (current_chat in admins):
         await bot.send_message(current_chat, 'Ты не админ. Ухади', parse_mode="HTML")
+        return
 
     try:
-        user_id = msg.split(' ')[0]
-        money = msg.split(' ')[1]
-    except IndexError:
-        await bot.send_message(current_chat, 'Неправильная команда. \n\nПаттерн: <user_id> <money>', parse_mode="HTML")
+        user_id = int(msg.text.split(' ')[0])
+        money = float(msg.text.split(' ')[1])
+    except Exception as e:
+        print(e)
+        await bot.send_message(current_chat, f'Неправильная команда ({e}). \n\nПаттерн: <user_id> <money>', parse_mode="HTML")
         return
 
     res = requests.post(os.getenv("BASE_URL") + "api/common/give_money/", json={'user_id': user_id, 'money': money})
     if res.status_code == 200:
-        await bot.send_message(current_chat, f'{money} рублей успешно выдано', parse_mode="HTML")
+        await bot.send_message(current_chat, f'{money} рублей успешно выдано ID: {user_id}', parse_mode="HTML")
     else:
         err = res.json()['error']
         await bot.send_message(current_chat, f'Ошибка при выдаче денег: {err}', parse_mode="HTML")

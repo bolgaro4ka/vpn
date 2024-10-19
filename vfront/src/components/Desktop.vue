@@ -64,12 +64,12 @@ async function payTarriffisure() {
 
         </Block>
         <Block>
-            <h2>Добро пожаловать, {{ me?.username }} (ID: {{ me?.id }})</h2>
+            <h2>Добро пожаловать, {{ me?.first_name }}! (ID: {{ me?.id }})</h2>
             <p>{{ me?.first_name }} {{ me?.last_name }} {{ me?.middle_name }} ({{ me?.email }})</p>
         </Block>
             <Block :style="'height: 100%; width: 100%;'" >
                 <div class="desktop__tariff" v-if="me.tariff">
-                    <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }} (Кол-во файлов: {{ me?.mof }})</h2>
+                    <h2>Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{me?.tariff.ppm}} руб/мес</h2>
                     <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
                     <!-- Следующяя оплата через месяц -->
                     <p>Следующая оплата: {{me.paid_next_date}}</p>
@@ -90,8 +90,8 @@ async function payTarriffisure() {
     </div>
     <div v-else class="desktop" >
         <Block>
-            <h2>Добро пожаловать!</h2>
-            <p>Вы не авторизованы! </p><RouterLink to="/auth/login/"><button>Войти</button></RouterLink>
+            <h2 style="font-size: 42px">Добро пожаловать!</h2>
+            <p style="font-size: 24px">Вы не авторизованы! </p><RouterLink to="/auth/login/"><button>Войти</button></RouterLink>
         </Block>
     </div>
     <Modal  v-if="isOpenYouSureTariff" @close="isOpenYouSureTariff = false" title="Вы уверены?">
@@ -115,6 +115,14 @@ async function payTarriffisure() {
 <style lang="scss" scoped>
 .desktop__wrapper {
     max-width: 100%;
+
+    h2 {
+        font-size: 42px;
+    }
+    
+    p {
+        font-size: 21px;
+    }
 }
 
 .desktop__inline {
@@ -122,6 +130,8 @@ async function payTarriffisure() {
     gap: 10px;
     align-items: center;
 }
+
+
 
 .desktop__actions {
     display: flex;
@@ -152,6 +162,7 @@ async function payTarriffisure() {
         background-color: white;
         color: var(--primary-color);
         width: 100%;
+        font-size: 21px;
     }
 
     button:hover {
@@ -185,6 +196,14 @@ async function payTarriffisure() {
             width: 100% !important;
         }
 
+    }
+
+    h2 {
+        font-size: 21px !important;
+    }
+
+    p {
+        font-size: 16px !important;
     }
 
     .mobile__price {

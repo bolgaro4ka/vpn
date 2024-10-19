@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://212.3.131.59:7000/'
+export const BASE_URL = 'http://192.168.0.228:7000/'
 
 export const API_URL = BASE_URL+'api/'
 

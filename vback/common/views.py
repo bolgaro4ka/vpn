@@ -127,6 +127,7 @@ def delete_payment(request):
     # res = {'message': 'Платеж успешно удален.'}
     return Response(res)
 
+
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 @authentication_classes([JWTAuthentication,
