@@ -95,10 +95,28 @@ def get_all_payments(request):
 
     for item in payments:
         res.append({
-            'id': item.user.id,
+            'payment_id': item.id,
+            'user_id': item.user.id,
             'created_at': item.created_at.strftime('%Y-%m-%d %H:%M:%S'),
         })
 
     return Response(res)
 
+
+@permission_classes([permissions.IsAuthenticated])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+@api_view(['POST'])
+def delete_payment(request):
+
+    payment_id = request.data.get('payment_id')
+
+    if not Payment.objects.filter(id=payment_id).exists():
+        return Response({'error': 'Платеж не найден.'}, status=status.HTTP_404_NOT_FOUND)
+
+    payment = Payment.objects.get(id=payment_id)
+    payment.delete()
+
+    res = {'message': 'Платеж успешно удален.'}
+    return Response(res)
 

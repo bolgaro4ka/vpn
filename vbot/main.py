@@ -15,10 +15,14 @@ from dotenv import load_dotenv
 import requests
 
 nest_asyncio.apply()
+
+load_dotenv()
 SECRET_KEY = os.getenv("TG_API_KEY", "not_so_secret")
 PASSWORD = os.getenv("PASSWORD", "1488")
 
+
 bot = Bot(token=SECRET_KEY)
+
 logging.basicConfig(level=logging.INFO)
 dp = Dispatcher()
 
@@ -32,7 +36,7 @@ async def user_registration(msg: types.Message):
 @dp.message(Command("m"))
 async def user_registration(msg: types.Message):
     current_chat = msg.chat.id
-    res = requests.get(os.getenv("URL") + "api/common/gpr/")
+    res = requests.get(os.getenv("BASE_URL") + "api/common/gpr/")
     await bot.send_message(current_chat, str(res.json()), parse_mode="HTML")
 
 
