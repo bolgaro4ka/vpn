@@ -115,9 +115,14 @@ def delete_payment(request):
     if not Payment.objects.filter(id=payment_id).exists():
         return Response({'error': 'Платеж не найден.'}, status=status.HTTP_404_NOT_FOUND)
 
+    res = [{
+        'payment_id': payment_id,
+        'user_id': Payment.objects.get(id=payment_id).user.id,
+        'created_at': Payment.objects.get(id=payment_id).created_at.strftime('%Y-%m-%d %H:%M:%S'),
+    }]
     payment = Payment.objects.get(id=payment_id)
     payment.delete()
 
-    res = {'message': 'Платеж успешно удален.'}
+    # res = {'message': 'Платеж успешно удален.'}
     return Response(res)
 
