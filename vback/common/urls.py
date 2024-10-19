@@ -1,6 +1,6 @@
 # myapp/urls.py
 from django.urls import path
-from .views import getTariffs, pay, changeTariff, create_payment_req, get_all_payments
+from .views import getTariffs, pay, changeTariff, create_payment_req, get_all_payments, delete_payment
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('changet/', changeTariff, name='changet'),
     path('cpr/', create_payment_req, name='cpr'),
     path('gpr/', get_all_payments, name='gpr'),
+    path('dpr/', delete_payment, name='dpr'),
 ]

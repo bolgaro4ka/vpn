@@ -103,10 +103,10 @@ def get_all_payments(request):
     return Response(res)
 
 
-@permission_classes([permissions.IsAuthenticated])
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
 @authentication_classes([JWTAuthentication,
                          BasicAuthentication])
-@api_view(['POST'])
 def delete_payment(request):
 
     payment_id = request.data.get('payment_id')
