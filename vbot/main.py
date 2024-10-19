@@ -48,7 +48,7 @@ async def check_payments():
 
 @dp.message(Command("start"))
 async def user_registration(msg: types.Message):
-    current_chat = msg.chat.id
+    current_chat = str(msg.chat.id)
     if not (current_chat in admins):
         await bot.send_message(current_chat, 'Ты не админ. Ухади', parse_mode="HTML")
         return
@@ -57,7 +57,7 @@ async def user_registration(msg: types.Message):
 
 @dp.message(Command("m"))
 async def user_registration(msg: types.Message):
-    current_chat = msg.chat.id
+    current_chat = str(msg.chat.id)
     if not (current_chat in admins):
         await bot.send_message(current_chat, 'Ты не админ. Ухади', parse_mode="HTML")
         return
@@ -68,6 +68,27 @@ async def user_registration(msg: types.Message):
         return
 
     await bot.send_message(current_chat, f"Платёж: {str(res.json()[0]['payment_id'])} \n\nПользователь: {str(res.json()[0]['user_id'])} \n\n Дата: {str(res.json()[0]['created_at'])} \n\n Это всё что мы знаем", parse_mode="HTML", reply_markup=get_keyboard_go_or_die(res.json()[0]['payment_id']))
+
+@dp.message()
+async def echo(msg: types.Message):
+    current_chat = str(msg.chat.id)
+    if not (current_chat in admins):
+        await bot.send_message(current_chat, 'Ты не админ. Ухади', parse_mode="HTML")
+
+    try:
+        user_id = msg.split(' ')[0]
+        money = msg.split(' ')[1]
+    except IndexError:
+        await bot.send_message(current_chat, 'Неправильная команда. \n\nПаттерн: <user_id> <money>', parse_mode="HTML")
+        return
+
+    res = requests.post(os.getenv("BASE_URL") + "api/common/give_money/", json={'user_id': user_id, 'money': money})
+    if res.status_code == 200:
+        await bot.send_message(current_chat, f'{money} рублей успешно выдано', parse_mode="HTML")
+    else:
+        err = res.json()['error']
+        await bot.send_message(current_chat, f'Ошибка при выдаче денег: {err}', parse_mode="HTML")
+
 
 @dp.callback_query()
 async def callback_query(call: types.CallbackQuery):
@@ -90,7 +111,7 @@ async def callback_query(call: types.CallbackQuery):
             if res.status_code == 200:
                 await bot.send_message(call.from_user.id, f'Платёж отменен. PID: {payment_id}', parse_mode="HTML")
             else:
-                err=res.json()['error']
+                err = res.json()['error']
                 await bot.send_message(call.from_user.id, f'Платёж не оплачен (ошибка).\n\n Причина: {err}\n\n PID: {payment_id}', parse_mode="HTML")
 
         if action == '2':

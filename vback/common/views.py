@@ -14,6 +14,7 @@ from rest_framework.decorators import authentication_classes
 
 
 from .models import Tariff, Payment
+from users.models import PUser
 from .serializers import TariffSerializer
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -126,3 +127,14 @@ def delete_payment(request):
     # res = {'message': 'Платеж успешно удален.'}
     return Response(res)
 
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+def give_money(request):
+    user_id = request.data.get('user_id')
+    money = request.data.get('money')
+    user = PUser.objects.get(id=user_id)
+    user.wallet += float(money)
+    user.save()
+    return Response({'message': f'{money} рублей успешно выдано'})
