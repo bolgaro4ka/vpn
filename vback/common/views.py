@@ -117,6 +117,8 @@ def delete_payment(request):
     payment = Payment.objects.get(id=payment_id)
     payment.delete()
 
+    payment.save()
+
     res = {'message': 'Платеж успешно удален.'}
     return Response(res)
 
