@@ -54,6 +54,7 @@ const me = await getMe(localStorage.getItem('jwt') as string);
             <p>Количество устройств</p>
             <input type="range" min="1" max="5" v-model="peoples"/>
             <p>{{peoples}} устройство(-а)</p>
+            <h2 style="text-align: end;">{{(me?.tariff.ppm)+(peoples-1)*100}} руб/мес</h2>
             <div class="tariff__actions">
                 <button @click="changeTariff($event, props.tariff, peoples, router); $emit('close')">Да</button>
                 <button @click="$emit('close')">Нет</button>

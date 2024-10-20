@@ -83,7 +83,7 @@ for (let item of res_payments) {
         </Block>
             <Block :style="'height: 100%; width: 100%;'" >
                 <div class="desktop__tariff" v-if="me.tariff">
-                    <h2 class="desktop__tariff_you">Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{me?.tariff.ppm}} руб/мес</h2>
+                    <h2 class="desktop__tariff_you">Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{(me?.tariff.ppm)+(me?.mof-1)*100}} руб/мес</h2>
                     <p>Оплачено: {{ me?.paid_date ? new Date(me?.paid_date) : 'никогда' }}</p>
                     <!-- Следующяя оплата через месяц -->
                     <p>Следующая оплата: {{me?.paid_date ? me.paid_next_date : 'никогда'}}</p>
