@@ -78,5 +78,27 @@
         font-size: 20px;
 
     }
+
+    p {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .mission {
+        p {
+            text-align: center;
+        }
+    }
+
+    .about {
+
+        q {
+            font-size: 30px;
+            word-wrap: break-word;
+            text-align: center;
+        }
+    }
+    
 }
 </style>
