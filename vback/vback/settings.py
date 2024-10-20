@@ -24,6 +24,7 @@ CSRF_TRUSTED_ORIGINS = [
           'http://212.3.131.59',
             'http://212.3.131.59:4000',
               'http://212.3.131.59:7000',
+              'https://vpna.paia1nik.ru',
               'https://vpn.paia1nik.ru',]
 
 # Quick-start development settings - unsuitable for production
@@ -45,6 +46,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://212.3.131.59:4000',
     'http://212.3.131.59:7000',
     'https://vpn.paia1nik.ru',
+    'https://vpna.paia1nik.ru',
 ]
 
 
