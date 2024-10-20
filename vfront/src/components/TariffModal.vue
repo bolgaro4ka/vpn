@@ -3,6 +3,7 @@
 import { getMe } from '@/auth';
 import { changeTariff } from '@/auth';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
     tariff: {
@@ -10,6 +11,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const router = useRouter();
 
 const emits = defineEmits(['close']);
 
@@ -52,7 +55,7 @@ const me = await getMe(localStorage.getItem('jwt') as string);
             <input type="range" min="1" max="5" v-model="peoples"/>
             <p>{{peoples}} человек(-a)</p>
             <div class="tariff__actions">
-                <button @click="changeTariff($event, props.tariff, peoples); $emit('close')">Да</button>
+                <button @click="changeTariff($event, props.tariff, peoples, router); $emit('close')">Да</button>
                 <button @click="$emit('close')">Нет</button>
             </div>
         </div>

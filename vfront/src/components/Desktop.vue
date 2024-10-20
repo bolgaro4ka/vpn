@@ -92,7 +92,7 @@ for (let item of res_payments) {
                 </div>
                 <div class="desktop__tariff" v-else>
                     <h2>Похоже у вас не выбран тариф</h2>
-                    <p>Вы можете выбрать тариф <RouterLink to="/buy/"><button style="width: 80px; text-align: center">здесь</button></RouterLink>!</p>
+                    <p>Вы можете выбрать тариф <RouterLink to="/buy/"><button style="width: 160px; text-align: center">здесь</button></RouterLink>!</p>
                 </div>
             </Block>
             <Block style="height: 100%; width: 100%;" v-if="me.paid">

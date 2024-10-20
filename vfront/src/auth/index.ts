@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {type User} from './interface'
 import { USER_URL, CHANGET_URL } from '@/config/main'
+import { redirect } from '@/common'
 
 
 export function auth(user : User) {
@@ -35,7 +36,7 @@ export function logout() {
     localStorage.clear()
 }
 
-export async function changeTariff(e: MouseEvent, tariff: any, mof: number) {
+export async function changeTariff(e: MouseEvent, tariff: any, mof: number, router: Router) {
     e.preventDefault()
     console.log(mof)
     const res = await axios.post(CHANGET_URL,
@@ -48,5 +49,9 @@ export async function changeTariff(e: MouseEvent, tariff: any, mof: number) {
         alert('Вы уже оплатили другой тариф. Переключение не удалось.')
         return false
     })
+
+    if (res) {
+        redirect(router, '/')
+    }
     
 }

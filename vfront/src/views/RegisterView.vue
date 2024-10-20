@@ -50,17 +50,15 @@ async function reg() {
     wallet: 0,
     paid: 0
 
-  }).then((res) => {
-    console.log(res.data);
-    return res.data
-  }).catch((err) => {
-    alert('Что-то пошло не так! Возможно вы уже зарегистрированны!');
-    return
   })
 
-  if (req_raw.status == 200 || req_raw.status == 201) {
+  const req = req_raw.data
+
+  if (req_raw.status == 201) {
     redirect(router, '/auth/login/');
-    return req_raw
+    return req
+  } else {
+    console.log(req.status);
   }
   
 
