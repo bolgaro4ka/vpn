@@ -141,4 +141,16 @@ input[type="range"]::-webkit-slider-thumb {
 
 }
 
+@media screen and (max-width: 500px) {
+
+    .tariff__changes {
+        flex-direction: column;
+        
+        svg {
+            transform: rotate(0.25turn);
+            margin: 10px;
+        }
+    }
+}
+
 </style>

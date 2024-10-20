@@ -59,7 +59,7 @@ def pay(request):
     if (user.wallet < tariff.ppm*user.number_of_files):
         return Response({'message': 'Недостаточно средств'})
 
-    user.wallet -= tariff.ppm+user.number_of_files*100
+    user.wallet -= tariff.ppm+((user.number_of_files-1)*100)
     user.paid = True
     user.paid_date = timezone.now()
     user.file_path = ''

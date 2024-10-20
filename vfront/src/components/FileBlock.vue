@@ -49,11 +49,12 @@ const me = await getMe(localStorage.getItem('jwt') as string);
 }
 
 .file_vpn:hover {
+    background-color: white;
     * {
         fill: var(--primary-color);
         color: var(--primary-color);
     }
-    background-color: white;
+    
 }
 
 .file_vpn__files {

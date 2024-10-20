@@ -111,6 +111,12 @@ img {
     .buy__textmodile {
         display: inline;
     }
+
+    .buy__button { 
+        margin: 0;
+        width: 93%;
+    }
+
     
 }
 

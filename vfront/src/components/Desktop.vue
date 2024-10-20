@@ -2,7 +2,7 @@
 import Block from './Block.vue';
 import { getMe } from '@/auth';
 import type { User } from '@/auth/interface';
-import { PAYT_URL } from '@/config/main';
+import { GPR_URL, PAYT_URL } from '@/config/main';
 import axios from 'axios';
 
 import { ref } from 'vue';
@@ -23,6 +23,7 @@ paid_date.setMonth(paid_date.getMonth() + 1);
 
 if (me) {
     me.paid_next_date = paid_date;
+    console.log(me.paid_next_date, paid_date, me?.paid_date)
 }
 async function payTarriff(event: Event) {
 
@@ -53,14 +54,27 @@ async function payTarriffisure() {
     
 }
 
+const res_payments = await axios.get(GPR_URL).then((res) => {
+    return res.data
+});
+
+const user_send_payment_req = ref(false);
+
+for (let item of res_payments) {
+    if (item.user_id === me?.id) {
+        user_send_payment_req.value = true
+    }
+}
+
+
 
 </script>
 
 <template>
 <div class="desktop__wrapper">
     <div class="desktop" v-if="me">
-        <Block v-if="me?.wallet" class="mobile__price">
-            <p>У вас на кошельке:<br/> <b>{{me?.wallet}} рублей</b></p>
+        <Block v-if="me?.wallet >= 0" class="mobile__price">
+            <p>У вас на кошельке:<br/> <b>{{me?.wallet}} рублей</b> {{user_send_payment_req ? '+ в обработке' : ''}}</p>
 
         </Block>
         <Block>
@@ -70,9 +84,9 @@ async function payTarriffisure() {
             <Block :style="'height: 100%; width: 100%;'" >
                 <div class="desktop__tariff" v-if="me.tariff">
                     <h2 class="desktop__tariff_you">Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{me?.tariff.ppm}} руб/мес</h2>
-                    <p>Оплачено: {{ new Date(me?.paid_date) }}</p>
+                    <p>Оплачено: {{ me?.paid_date ? new Date(me?.paid_date) : 'никогда' }}</p>
                     <!-- Следующяя оплата через месяц -->
-                    <p>Следующая оплата: {{me.paid_next_date}}</p>
+                    <p>Следующая оплата: {{me?.paid_date ? me.paid_next_date : 'никогда'}}</p>
                     <p>Статус: <span :class="me?.paid ? 'green' : 'red'">{{ me?.paid ? 'оплачен' : 'неоплачен' }}</span></p>
                     <button @click="payTarriff">Оплатить</button>
                 </div>
@@ -98,7 +112,7 @@ async function payTarriffisure() {
         <Suspense>
             <div style="text-align: center; padding: 10px;">
                 <h3 style="color: var(--primary-color)">Вы уверены что хотите оплатить этот тариф?</h3>
-                <p>Это снимет у вас {{me.tariff?.ppm+me?.mof*100}} рублей</p>
+                <p>Это снимет у вас {{me.tariff?.ppm+(me?.mof-1)*100}} рублей</p>
                 <div class="desktop__actions">
                     <button @click="payTarriffisure">Да</button>
                 <button @click="isOpenYouSureTariff = false">Нет</button>
@@ -115,6 +129,10 @@ async function payTarriffisure() {
 <style lang="scss" scoped>
 .desktop__wrapper {
     max-width: 100%;
+
+    * {
+        word-wrap: break-word;
+    }
 
     h2 {
         font-size: 36px;

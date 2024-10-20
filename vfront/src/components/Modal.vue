@@ -94,6 +94,12 @@
 <style scoped lang="scss">
     .modal {
 
+      .modal__body {
+        overflow-y: scroll;
+        max-height: 80dvh;
+        max-width: 95vw;
+      }
+
       *:not(.modal__body) {
         transition: none;
       }

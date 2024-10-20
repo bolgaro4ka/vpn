@@ -6,6 +6,8 @@ import type { User } from '@/auth/interface';
 import Modal from './Modal.vue';
 import BuyModal from './BuyModal.vue';
 import Loader from './Loader.vue';
+import axios from 'axios';
+import { GPR_URL } from '@/config/main';
 
 const isOpenBuyModal = ref(false);
 const emits = defineEmits(['toggleSider']);
@@ -21,6 +23,18 @@ if (me === false) {
 
 
 const isSiderOpen = ref(true);
+
+const res_payments = await axios.get(GPR_URL).then((res) => {
+    return res.data
+});
+
+const user_send_payment_req = ref(false);
+
+for (let item of res_payments) {
+    if (item.user_id === me?.id) {
+        user_send_payment_req.value = true
+    }
+}
 </script>
 
 <template>
@@ -40,7 +54,7 @@ const isSiderOpen = ref(true);
                 <RouterLink to="/auth/login/">Вход</RouterLink>
             </template>
             <div v-else class="header__wallet">
-                <p>Баланс: {{me?.wallet}} рублей</p>
+                <p style="text-align: center; line-height: 18px;">Баланс: {{me?.wallet}} рублей<br/> <span style="font-size: 15px; color: var(--primary-color); font-weight: bold;">{{user_send_payment_req ? '+ в обработке' : ''}}</span></p>
                 <button @click="isOpenBuyModal = true">Пополнить кошелёк</button>
             </div>
         </div>
@@ -124,6 +138,27 @@ const isSiderOpen = ref(true);
         .header__wallet p {
             display: none;
         }
+    }
+
+    @media screen and (max-width: 425px) {
+        .header__logo {
+            .logo {
+                h2 {
+                    font-size: 20px;
+                }
+            }
+
+            margin-left: 5px;
+        }
+
+        .header__wallet {
+            button {
+                font-size: 12px;
+                padding: 5px;
+            }
+            
+        }
+        
     }
     
     

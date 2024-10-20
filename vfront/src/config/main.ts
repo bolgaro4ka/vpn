@@ -23,3 +23,5 @@ export const PAYT_URL = COMMON_URL+'payt/'
 export const CHANGET_URL = COMMON_URL+'changet/'
 
 export const CREATE_PAYMENT_ENDPOINT = COMMON_URL+'cpr/'
+
+export const GPR_URL = COMMON_URL + 'gpr/'
