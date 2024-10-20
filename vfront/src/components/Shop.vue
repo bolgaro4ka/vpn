@@ -42,13 +42,15 @@ function handleOpenBuyModal(event: Event, tariff: any) {
         <div class="shop">
             <h1>Наши тарифы</h1>
             <div class="shop__tarrifs">
-                <div class="shop__tarrif" v-for="tariff in res">
+                <div v-for="tariff in res">
                     <template v-if="tariff.is_published">
-                        <img :src="BASE_URL+tariff.image" alt=""> 
-                        <h3>{{tariff.name}}</h3>
-                        <p>{{tariff.description}}</p>
-                        <p class="shop__tarrif__price">{{tariff.ppm}} руб/мес</p>
-                        <button @click="handleOpenBuyModal($event, tariff)">Выбрать</button>
+                        <div class="shop__tarrif">
+                            <img :src="BASE_URL+tariff.image" alt=""> 
+                            <h3>{{tariff.name}}</h3>
+                            <p>{{tariff.description}}</p>
+                            <p class="shop__tarrif__price">{{tariff.ppm}} руб/мес</p>
+                            <button @click="handleOpenBuyModal($event, tariff)">Выбрать</button>
+                        </div>
                     </template>
                 </div>
             </div>
