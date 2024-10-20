@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://212.3.131.59:7000/'
+export const BASE_URL = 'https://vpn.paia1nik.ru/'
 
 export const API_URL = BASE_URL+'api/'
 
