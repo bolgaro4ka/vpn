@@ -87,6 +87,12 @@ input[type="range"]
     overflow: hidden;
 }
 
+input[type="range"]::-webkit-slider-runnable-track {
+    background: gray; /* Цвет полосы */
+    height: 3px; /* Высота полосы */
+    border-radius: 4px; /* Закругленные края */
+  }
+
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
