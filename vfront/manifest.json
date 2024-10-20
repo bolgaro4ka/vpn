@@ -1,0 +1,22 @@
+{
+    "name": "Paia1nik VPN",
+    "short_name": "PVPN",
+    "description": "Покупка ВПН от Paia1nik",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "white",
+    "theme_color": "#7e1517",
+
+    "icons": [
+      {
+        "src": "/src/assets/favicon.ico",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/src/assets/favicon.ico",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
