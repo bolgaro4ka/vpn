@@ -12,7 +12,7 @@ import { GPR_URL } from '@/config/main';
 const isOpenBuyModal = ref(false);
 const emits = defineEmits(['toggleSider']);
 const auth = ref(false);
-const me : User = await getMe(localStorage.getItem('jwt') as string)
+const me = await getMe(localStorage.getItem('jwt') as string)
 
 
 if (me === false) {

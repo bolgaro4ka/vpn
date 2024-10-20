@@ -2,6 +2,7 @@ import axios from 'axios'
 import {type User} from './interface'
 import { USER_URL, CHANGET_URL } from '@/config/main'
 import { redirect } from '@/common'
+import type { Router } from 'vue-router'
 
 
 export function auth(user : User) {

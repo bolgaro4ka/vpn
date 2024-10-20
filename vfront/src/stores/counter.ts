@@ -12,19 +12,3 @@ export const useCounterStore = defineStore('counter', () => {
   return { count, doubleCount, increment }
 })
 
-
-export const useUserStore = defineStore('user', () => {
-  const user : Ref<User> = ref({
-    first_name: '',
-    username: '',
-    password: '',
-    last_name: '',
-    middle_name: '',
-    email: '',
-    phone: '',
-    id: '',
-    access: '',
-    refresh: ''
-  })
-  return { user }
-})

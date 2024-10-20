@@ -9,7 +9,7 @@ import Loader from './Loader.vue';
 
 
 const isOpenBuyModal = ref(false);
-const curTariff = ref(null);
+const curTariff : any = ref(null);
 
 
 
