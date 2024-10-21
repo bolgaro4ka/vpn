@@ -12,7 +12,7 @@ def null_if_expired_pay():
         i += 1
         for user in PUser.objects.all():
             try:
-                if user.paid and user.paid_date and user.paid_date + timezone.timedelta(days=37) < timezone.now():
+                if user.paid and user.paid_date and user.paid_date + timezone.timedelta(days=32) < timezone.now():
                     user.paid = False
                     for iteration in range(user.number_of_files):
                         delete_wg_config(user.id, iteration)
