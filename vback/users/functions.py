@@ -12,7 +12,6 @@ def null_if_expired_pay():
         i += 1
         for user in PUser.objects.all():
             try:
-                print('[INFO] null_if_expired_pay | user paid_date:'+str(user.paid_date)+' '+str(user.paid_date + timezone.timedelta(days=32))+' | '+str(timezone.now()))
                 if user.paid and user.paid_date and ((user.paid_date + timezone.timedelta(days=32)) < timezone.now()):
                     user.paid = False
                     for iteration in range(user.number_of_files):
@@ -23,7 +22,7 @@ def null_if_expired_pay():
             except Exception as e:
                 print(e)
 
-        time.sleep(2)
+        time.sleep(5)
 
 
 def run_in_new_null_if_expired_pay():
