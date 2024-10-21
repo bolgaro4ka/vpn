@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://vpna.paia1nik.ru/'
+export const BASE_URL = 'http://localhost:7000/'
 
 export const API_URL = BASE_URL+'api/'
 
