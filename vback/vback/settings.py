@@ -25,7 +25,8 @@ CSRF_TRUSTED_ORIGINS = [
             'http://212.3.131.59:4000',
               'http://212.3.131.59:7000',
               'https://vpna.paia1nik.ru',
-              'https://vpn.paia1nik.ru',]
+              'https://vpn.paia1nik.ru',
+              ]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -84,7 +85,9 @@ ROOT_URLCONF = 'vback.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / "vback/templates",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -13,7 +13,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 import os
 
-from .models import Tariff, Payment
+from .models import Tariff, Payment, Tutorial
 from users.models import PUser
 from .serializers import TariffSerializer
 
@@ -160,3 +160,24 @@ def change_auto_pay(request):
     usr.save()
     return Response({'message': 'Успешно!'})
 
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+def get_tutorials(request):
+    tutorials = Tutorial.objects.all()
+    res = []
+
+    for item in tutorials:
+        res.append({
+            'id': item.id,
+            'name': item.name,
+            'description': item.description,
+            'image': item.image.url if item.image else None,
+            'created_at': item.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'is_published': item.is_published,
+            'url': item.url
+        })
+
+    return Response(res)

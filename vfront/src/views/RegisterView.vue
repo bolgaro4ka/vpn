@@ -9,6 +9,7 @@ import { redirect } from '@/common';
 import { useRouter } from 'vue-router';
 import WhyButton from '@/components/WhyButton.vue';
 import Modal from '@/components/Modal.vue';
+import ShowPasswordBtn from '@/components/ShowPasswordBtn.vue';
 
 const email = ref('');
 const phone = ref('8000000000');
@@ -27,6 +28,9 @@ const isOpenHintName = ref(false);
 const isOpenHintEmail = ref(false);
 const isOpenHintPassword = ref(false);
 const isOpenHintRepeatPassword = ref(false);
+
+const inputPassword = ref(null);
+const inputRepeatPassword = ref(null);
 
 
 async function reg() {
@@ -75,13 +79,41 @@ async function reg() {
     <div class="reg">
       <div class="reg_form">
       <div class="reg__title"><h2>Регистрация</h2></div>
-      <input type="text" placeholder="Логин" v-model="username" required autocomplete="username"/>
-      <div class="form__inline"><input type="text" placeholder="Фамилия Имя Отчество" v-model="full_name" required autocomplete="name"/><WhyButton @click="isOpenHintName = true"/></div>
-      <div class="form__inline"><input type="email" placeholder="Почта" v-model="email" required autocomplete="email"/><WhyButton @click="isOpenHintEmail = true"/></div>
-      <input type="password" placeholder="Пароль" v-model="password" required autocomplete="new-password"/>
-        <input type="password" placeholder="Подтверждение пароля" v-model="password_confirm" required autocomplete="new-password"/>
+      <div class="label-float">
+        
+        <input type="text" placeholder=" " v-model="username" required autocomplete="username" id="username"/>
+        <label>Логин</label>
+      </div>
+      <div class="form__inline">
+        <div class="label-float">
+          <input type="text" placeholder=" " v-model="full_name" required autocomplete="name"/>
+          <label>ФИО</label>
+        </div>
+          <WhyButton @click="isOpenHintName = true" class="reg_why"/>
+        </div>
+      <div class="form__inline">
+        <div class="label-float">
+        <input type="email" placeholder=" " v-model="email" required autocomplete="email"/>
+        <label>Почта</label>
+      </div>
+      <WhyButton @click="isOpenHintEmail = true" class="reg_why"/>
+    </div>
+    <div class="form__inline">
+      <div class="label-float">
+      <input type="password" placeholder="" v-model="password" required autocomplete="new-password" ref="inputPassword">
+      <label for="">Пароль</label>
+    </div>
+    <ShowPasswordBtn @showPassword="inputPassword.type = inputPassword.type == 'password' ? 'text' : 'password'"/>
+    </div>
+    <div class="form__inline">
+    <div class="label-float">
+        <input type="password" placeholder="" v-model="password_confirm" required autocomplete="new-password" ref="inputRepeatPassword"/>
+        <label for="">Повторите пароль</label>
+        </div>
+        <ShowPasswordBtn @showPassword="inputRepeatPassword.type = inputRepeatPassword.type == 'password' ? 'text' : 'password'"/>
+        </div>
       <button @click="reg">Зарегистрироваться</button>
-      <RouterLink to="/auth/login/">Я старенький</RouterLink>
+      <RouterLink to="/auth/login/">Я старенький - Вход</RouterLink>
     </div>
     </div>
     <BackButton/>
@@ -120,6 +152,7 @@ async function reg() {
 </template>
 
 <style lang="scss" scoped>
+
 .reg__wrapper { 
   display: flex;
   justify-content: center;
@@ -132,16 +165,23 @@ async function reg() {
   display: flex;
   align-items: center;
   gap: 5px;
+  justify-content: space-between;
 
   input {
-    width: 330px !important;
+    width: calc(350px - 28px) !important;
   }
+
+  
 }
 
 
 .reg {
   width: 400px;
   height: 400px;
+
+  &_why {
+    margin-bottom: -6px;
+  }
 
   
 
@@ -152,19 +192,10 @@ async function reg() {
       flex-direction: column;
       align-items: center;
 
-      input {
-        outline: none !important;
-        width: 90%;
-        height: 30px;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        background-color: #ccc;
-      }
-
       button {
-        width: 90%;
+        width: 350px;
       }
     }
   }
+  
 </style>

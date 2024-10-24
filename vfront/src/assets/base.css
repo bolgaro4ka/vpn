@@ -66,3 +66,54 @@ h1 {
   color: var(--primary-color);
   font-weight: bold;
 }
+
+.label-float{
+  position: relative;
+  padding-top: 8px;
+}
+
+.label-float input{
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 350px;
+  outline: none;
+  min-width: 250px ;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: all .1s linear !important;
+  -webkit-transition: all .1s linear !important;
+  -moz-transition: all .1s linear;
+  -webkit-appearance: none;
+}
+
+.label-float input:focus{
+  border: 2px solid var(--primary-color);
+}
+
+.label-float input::placeholder{
+  color:transparent;
+}
+
+.label-float label{
+  pointer-events: none;
+  position: absolute;
+  top: calc(50% - 10px);
+  left: 10px;
+  transition: all .1s linear;
+  -webkit-transition: all .1s linear;
+  -moz-transition: all .1s linear;
+  background-color: white;
+  padding: 0px 10px;
+}
+
+
+.label-float input:focus:required:invalid{
+  border: 2px solid var(--primary-color);
+}
+
+.label-float input:focus + label,
+.label-float input:not(:placeholder-shown) + label{
+  font-size: 13px;
+  top: -2px;
+  color: gray;
+}

@@ -7,6 +7,7 @@ import { auth } from '@/auth';
 import type { User } from '@/auth/interface';
 import { redirect } from '@/common';
 import { useRouter } from 'vue-router';
+import ShowPasswordBtn from '@/components/ShowPasswordBtn.vue';
 
 const username = ref('');
 const password = ref('');
@@ -36,6 +37,8 @@ async function login() {
 
 }
 
+const inputPassword = ref(null);
+
 
   
 
@@ -50,10 +53,19 @@ async function login() {
     <div class="login">
       <div class="login_form">
       <div class="login__title"><h2>Вход</h2></div>
-      <input type="text" placeholder="Логин" v-model="username" autocomplete="name"/>
-      <input type="password" placeholder="Пароль" v-model="password" autocomplete="current-password"/>
+      <div class="label-float">
+        <input type="text" placeholder=" " v-model="username" autocomplete="name"/>
+        <label>Логин</label>
+      </div>
+      <div class="form__inline">
+        <div class="label-float">
+          <input type="password" placeholder=" " v-model="password" autocomplete="current-password" ref="inputPassword"/>
+          <label>Пароль</label>
+        </div>
+        <ShowPasswordBtn @show-password="() => inputPassword.type = inputPassword.type === 'password' ? 'text' : 'password'" style="margin-bottom: -8px;"/>
+      </div>
       <button @click="login">Войти</button>
-      <RouterLink to="/auth/reg/">Я новенький - регистрация</RouterLink>
+      <RouterLink to="/auth/reg/">Я новенький - Регистрация</RouterLink>
     </div>
     </div>
     <BackButton/>
@@ -67,9 +79,24 @@ async function login() {
   align-items: center;
   width: 100%;
   height: 100%;
+
+  button {
+    width: 351px;
+  }
 }
 
+.form__inline {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: space-between;
 
+  input {
+    width: calc(350px - 28px) !important;
+  }
+
+  
+}
 
 .login {
   width: 400px;
@@ -84,19 +111,8 @@ async function login() {
       flex-direction: column;
       align-items: center;
 
-      input {
-        outline: none !important;
-        width: 90%;
-        height: 30px;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        background-color: #ccc;
-      }
-
-      button {
-        width: 90%;
-      }
     }
   }
+
+
 </style>

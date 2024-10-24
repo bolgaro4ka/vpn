@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://vpna.paia1nik.ru/'
+export const BASE_URL = 'http://localhost:7000/'
 
 export const API_URL = BASE_URL+'api/'
 
@@ -27,3 +27,5 @@ export const CREATE_PAYMENT_ENDPOINT = COMMON_URL+'cpr/'
 export const GPR_URL = COMMON_URL + 'gpr/'
 
 export const CHANGE_AUTO_PAY_URL = COMMON_URL + 'change_autopay/'
+
+export const TUTORIALS_URL = COMMON_URL + 'tutorials/'
