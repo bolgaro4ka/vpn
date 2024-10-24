@@ -19,8 +19,8 @@ const me : User = await getMe(localStorage.getItem('jwt') as string);
 const isOpenYouSureTariff = ref(false);
 const auto_pay = ref(false);
 const showSubmitAutoPayButton= ref(false)
-let paid_date = new Date(me?.paid_date )
-paid_date.setMonth(paid_date.getMonth() + 1);
+var paid_date = new Date(me?.paid_date )
+paid_date.setMonth(paid_date.getMonth() + 1)
 
 if (me) {
     me.paid_next_date = paid_date;
@@ -103,9 +103,9 @@ async function changeAutoPayMode(e: MouseEvent) {
             <Block :style="'height: 100%; width: 100%;'" >
                 <div class="desktop__tariff" v-if="me.tariff">
                     <h2 class="desktop__tariff_you">Ваш тариф: {{ me?.tariff.name }} | ID: {{ me?.tariff.id }}<br/> Кол-во файлов: {{ me?.mof }} | {{(me?.tariff.ppm)+(me?.mof-1)*100}} руб/мес</h2>
-                    <p>Оплачено: {{ me?.paid_date ? new Date(me?.paid_date) : 'никогда' }}</p>
+                    <p>Оплачено: {{ me?.paid_date ? `${String(new Date(me.paid_date).getDate()).padStart(2, '0')}.${String(new Date(me.paid_date).getMonth()).padStart(2, '0')}.${String(new Date(me.paid_date).getFullYear()).padStart(2, '0')} в ${new Date(me.paid_date).getHours()} часов` : 'никогда' }}</p>
                     <!-- Следующяя оплата через месяц -->
-                    <p>Следующая оплата: {{me?.paid_date ? me.paid_next_date : 'никогда'}}</p>
+                    <p>Следующая оплата: {{me?.paid_date ? `${String(new Date(me.paid_next_date).getDate()).padStart(2, '0')}.${String(new Date(me.paid_next_date).getMonth()).padStart(2, '0')}.${String(new Date(me.paid_next_date).getFullYear()).padStart(2, '0')} в ${new Date(me.paid_next_date).getHours()} часов` : 'никогда'}}</p>
                     <p>Статус: <span :class="me?.paid ? 'green' : 'red'">{{ me?.paid ? 'оплачен' : 'неоплачен' }}</span></p>
                     <div class="auto_pay__wrapper">
                         <input v-model="auto_pay" type="checkbox" id="auto_pay" @click="showSubmitAutoPayButton = !showSubmitAutoPayButton; auto_pay = !auto_pay">

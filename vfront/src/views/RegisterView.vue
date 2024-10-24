@@ -75,11 +75,11 @@ async function reg() {
     <div class="reg">
       <div class="reg_form">
       <div class="reg__title"><h2>Регистрация</h2></div>
-      <input type="text" placeholder="Логин" v-model="username" required/>
-      <div class="form__inline"><input type="text" placeholder="Фамилия Имя Отчество" v-model="full_name" required/><WhyButton @click="isOpenHintName = true"/></div>
-      <div class="form__inline"><input type="email" placeholder="Почта" v-model="email" required/><WhyButton @click="isOpenHintEmail = true"/></div>
-      <input type="password" placeholder="Пароль" v-model="password" required/>
-        <input type="password" placeholder="Подтверждение пароля" v-model="password_confirm" required/>
+      <input type="text" placeholder="Логин" v-model="username" required autocomplete="username"/>
+      <div class="form__inline"><input type="text" placeholder="Фамилия Имя Отчество" v-model="full_name" required autocomplete="name"/><WhyButton @click="isOpenHintName = true"/></div>
+      <div class="form__inline"><input type="email" placeholder="Почта" v-model="email" required autocomplete="email"/><WhyButton @click="isOpenHintEmail = true"/></div>
+      <input type="password" placeholder="Пароль" v-model="password" required autocomplete="new-password"/>
+        <input type="password" placeholder="Подтверждение пароля" v-model="password_confirm" required autocomplete="new-password"/>
       <button @click="reg">Зарегистрироваться</button>
       <RouterLink to="/auth/login/">Я старенький</RouterLink>
     </div>

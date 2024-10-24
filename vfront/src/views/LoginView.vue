@@ -50,8 +50,8 @@ async function login() {
     <div class="login">
       <div class="login_form">
       <div class="login__title"><h2>Вход</h2></div>
-      <input type="text" placeholder="Логин" v-model="username"/>
-      <input type="password" placeholder="Пароль" v-model="password"/>
+      <input type="text" placeholder="Логин" v-model="username" autocomplete="name"/>
+      <input type="password" placeholder="Пароль" v-model="password" autocomplete="current-password"/>
       <button @click="login">Войти</button>
       <RouterLink to="/auth/reg/">Я новенький - регистрация</RouterLink>
     </div>

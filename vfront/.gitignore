@@ -28,3 +28,5 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+*.sqlite3
+db.sqlite3
