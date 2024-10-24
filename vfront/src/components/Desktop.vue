@@ -2,7 +2,7 @@
 import Block from './Block.vue';
 import { getMe } from '@/auth';
 import type { User } from '@/auth/interface';
-import { GPR_URL, PAYT_URL } from '@/config/main';
+import { CHANGE_AUTO_PAY_URL, GPR_URL, PAYT_URL } from '@/config/main';
 import axios from 'axios';
 
 import { ref } from 'vue';
@@ -17,12 +17,14 @@ const router = useRouter();
 
 const me : User = await getMe(localStorage.getItem('jwt') as string);
 const isOpenYouSureTariff = ref(false);
-
+const auto_pay = ref(false);
+const showSubmitAutoPayButton= ref(false)
 let paid_date = new Date(me?.paid_date )
 paid_date.setMonth(paid_date.getMonth() + 1);
 
 if (me) {
     me.paid_next_date = paid_date;
+    auto_pay.value = me.auto_pay
     console.log(me.paid_next_date, paid_date, me?.paid_date)
 }
 async function payTarriff(event: Event) {
@@ -66,6 +68,23 @@ for (let item of res_payments) {
     }
 }
 
+async function changeAutoPayMode(e: MouseEvent) {
+    const res = await axios.post(CHANGE_AUTO_PAY_URL, {
+        'auto_pay': auto_pay.value
+    }).then( (res : Response) => {
+        console.log(res.status)
+        if (res.status == 200) alert('Успешно!')
+        if (res.status == 201) alert('Успешно!')
+        reload(router)
+    }
+        
+    ).catch( (e) => {
+        console.log(auto_pay.value);
+        alert('Что-то пошло не так!')
+    }
+    )
+}
+
 
 
 </script>
@@ -88,6 +107,10 @@ for (let item of res_payments) {
                     <!-- Следующяя оплата через месяц -->
                     <p>Следующая оплата: {{me?.paid_date ? me.paid_next_date : 'никогда'}}</p>
                     <p>Статус: <span :class="me?.paid ? 'green' : 'red'">{{ me?.paid ? 'оплачен' : 'неоплачен' }}</span></p>
+                    <div class="auto_pay__wrapper">
+                        <input v-model="auto_pay" type="checkbox" id="auto_pay" @click="showSubmitAutoPayButton = !showSubmitAutoPayButton; auto_pay = !auto_pay">
+                        <label for="auto_pay">Автооплата</label>
+                        <button v-if="showSubmitAutoPayButton" class="desktop__submitautobtn" @click="changeAutoPayMode">Подтвердить</button></div>
                     <button @click="payTarriff">Оплатить</button>
                 </div>
                 <div class="desktop__tariff" v-else>
@@ -143,10 +166,29 @@ for (let item of res_payments) {
     }
 }
 
+.auto_pay__wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    label {
+        font-size: 19px;
+    }
+
+    input {
+        height: 20px;
+        width: 20px;
+    }
+}
+
 .desktop__inline {
     display: flex;
     gap: 10px;
     align-items: center;
+}
+
+.desktop__submitautobtn {
+    width: 200px !important;
 }
 
 .desktop__tariff_you {

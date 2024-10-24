@@ -15,4 +15,5 @@ export interface User {
     paid_next_date?: any;
     tariff?: any;
     mof: number;
+    auto_pay: boolean;
 }

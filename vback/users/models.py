@@ -15,3 +15,4 @@ class PUser(AbstractUser):
     paid_date = models.DateTimeField(null=True, blank=True, verbose_name='Когда оплачено')
     number_of_files = models.IntegerField(default=1, verbose_name='Кол-во профилей (.conf)')
     file_path = models.CharField(max_length=255, null=True, blank=True, verbose_name='Путь к файлу')
+    auto_pay = models.BooleanField(default=0, verbose_name='Автооплата')

@@ -2,7 +2,8 @@ from users.models import PUser
 from django.utils import timezone
 import time
 import threading
-from wg.functions import delete_wg_config
+from wg.functions import delete_wg_config, create_wg_config
+from rest_framework.response import Response
 
 
 def null_if_expired_pay():
@@ -17,6 +18,22 @@ def null_if_expired_pay():
                     for iteration in range(user.number_of_files):
                         delete_wg_config(user.id, iteration)
                     user.file_path = None
+                    user.save()
+
+                if user.auto_pay and (not user.paid):
+                    tariff = user.tariff
+
+                    if (user.wallet < tariff.ppm+((user.number_of_files-1)*100)):
+                        continue
+
+                    user.wallet -= tariff.ppm+((user.number_of_files-1)*100)
+                    user.paid = True
+                    user.paid_date = timezone.now()
+                    user.file_path = ''
+
+                    for iteration in range(user.number_of_files):
+                        user.file_path += create_wg_config(user.id, iteration) + ';'
+
                     user.save()
 
             except Exception as e:

@@ -114,7 +114,8 @@ def getMe(request):
                      'tariff': tariff_data,
                      'paid_date': user.paid_date,
                      'file': user.file_path,
-                     'mof': user.number_of_files
+                     'mof': user.number_of_files,
+                     'auto_pay': user.auto_pay
                      })
 
 

@@ -56,7 +56,7 @@ def pay(request):
     user = request.user
     tariff = user.tariff
 
-    if (user.wallet < tariff.ppm*user.number_of_files):
+    if (user.wallet < tariff.ppm+((user.number_of_files-1)*100)):
         return Response({'message': 'Недостаточно средств'})
 
     user.wallet -= tariff.ppm+((user.number_of_files-1)*100)
@@ -139,3 +139,16 @@ def give_money(request):
     user.wallet += float(money)
     user.save()
     return Response({'message': f'{money} рублей успешно выдано'})
+
+@permission_classes([permissions.IsAuthenticated])
+@authentication_classes([JWTAuthentication,
+                         BasicAuthentication])
+@api_view(['POST'])
+def change_auto_pay(request):
+    auto_pay = request.data.get('auto_pay')
+    print(request.data)
+    usr = request.user
+
+    usr.auto_pay = auto_pay
+    usr.save()
+    return Response({'message': 'Успешно!'})
